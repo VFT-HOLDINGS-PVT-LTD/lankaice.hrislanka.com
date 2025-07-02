@@ -93,7 +93,7 @@
                                                 </div>
                                                 <button type="submit" id="btnSubmit" name="btnSubmit" class="btn btn-dark w-100 py-8 mb-4 rounded-1" style="background-color:#07b1dd ; border-color: #07b1dd; font-weight: bold;">Sign In</button>
                                                 <div class="d-flex align-items-center justify-content-center">
-                                                    <p class="fs-12 mb-0 fw-medium">VFT PAYROLL SYSTEM V0.2</p>
+                                                    <p class="fs-12 mb-0 fw-medium">VFT PAYROLL SYSTEM V0.3</p>
                                                 </div>
 
                                             </form>
