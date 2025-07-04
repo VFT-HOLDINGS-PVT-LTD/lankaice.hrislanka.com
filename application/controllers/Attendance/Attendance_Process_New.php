@@ -8,7 +8,7 @@ class Attendance_Process_New extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        if (!($this->session->userdata('login_user'))) {
+        if (! ($this->session->userdata('login_user'))) {
             redirect(base_url() . "");
         }
         /*
@@ -24,11 +24,11 @@ class Attendance_Process_New extends CI_Controller
     public function index()
     {
 
-        $data['title'] = "Attendance Process | HRM System";
-        $data['data_set'] = $this->Db_model->getData('EmpNo,Emp_Full_Name', 'tbl_empmaster');
-        $data['data_shift'] = $this->Db_model->getData('ShiftCode,ShiftName', 'tbl_shifts');
-        $data['data_roster'] = $this->Db_model->getData('RosterCode,RosterName', 'tbl_rosterpatternweeklyhd');
-        $data['autorun_settings'] = $this->Db_model->getfilteredData("SELECT * FROM tbl_autorun_settings WHERE status_flag_name='attendance_process_run'");
+        $data['title']             = "Attendance Process | HRM System";
+        $data['data_set']          = $this->Db_model->getData('EmpNo,Emp_Full_Name', 'tbl_empmaster');
+        $data['data_shift']        = $this->Db_model->getData('ShiftCode,ShiftName', 'tbl_shifts');
+        $data['data_roster']       = $this->Db_model->getData('RosterCode,RosterName', 'tbl_rosterpatternweeklyhd');
+        $data['autorun_settings']  = $this->Db_model->getfilteredData("SELECT * FROM tbl_autorun_settings WHERE status_flag_name='attendance_process_run'");
         $data['autorun_settings2'] = $this->Db_model->getfilteredData("SELECT * FROM tbl_autorun_settings WHERE status_flag_name='shift_allocation_run'");
         $data['autorun_settings3'] = $this->Db_model->getfilteredData("SELECT * FROM tbl_autorun_settings WHERE status_flag_name='initialize_run'");
 
@@ -45,9 +45,9 @@ class Attendance_Process_New extends CI_Controller
 
     public function re_process()
     {
-        $data['title'] = "Attendance Process | HRM System";
-        $data['data_set'] = $this->Db_model->getData('EmpNo,Emp_Full_Name', 'tbl_empmaster');
-        $data['data_shift'] = $this->Db_model->getData('ShiftCode,ShiftName', 'tbl_shifts');
+        $data['title']       = "Attendance Process | HRM System";
+        $data['data_set']    = $this->Db_model->getData('EmpNo,Emp_Full_Name', 'tbl_empmaster');
+        $data['data_shift']  = $this->Db_model->getData('ShiftCode,ShiftName', 'tbl_shifts');
         $data['data_roster'] = $this->Db_model->getData('RosterCode,RosterName', 'tbl_rosterpatternweeklyhd');
 
         $data['sh_employees'] = $this->Db_model->getfilteredData("SELECT
@@ -78,13 +78,13 @@ class Attendance_Process_New extends CI_Controller
 
         $AfterShift = 0;
 
-        if (!empty($dtEmp['EmpData'])) {
+        if (! empty($dtEmp['EmpData'])) {
 
             for ($x = 0; $x < count($dtEmp['EmpData']); $x++) {
                 $EmpNo = $dtEmp['EmpData'][$x]->EmpNo;
 
                 $FromDate = $dtEmp['EmpData'][$x]->FDate;
-                $ToDate = $dtEmp['EmpData'][$x]->TDate;
+                $ToDate   = $dtEmp['EmpData'][$x]->TDate;
                 //Check If From date less than to Date
                 if ($FromDate <= $ToDate) {
                     $settings = $this->Db_model->getfilteredData("SELECT tbl_setting.Group_id,tbl_setting.Ot_m,tbl_setting.Ot_e,tbl_setting.Ot_d_Late,
@@ -101,38 +101,38 @@ class Attendance_Process_New extends CI_Controller
                     $query_length = count($emp_shifts);
 
                     $ApprovedExH = 0;
-                    $DayStatus = "not";
-                    $ID_Roster = '';
-                    $InDate = '';
-                    $InTime = '';
-                    $OutDate = '';
-                    $OutTime = '';
+                    $DayStatus   = "not";
+                    $ID_Roster   = '';
+                    $InDate      = '';
+                    $InTime      = '';
+                    $OutDate     = '';
+                    $OutTime     = '';
 
-                    $from_date = '';
-                    $from_time = '';
-                    $to_date = '';
-                    $to_time = '';
-                    $Day_Type = 0;
-                    $lateM = '';
-                    $ED = '';
-                    $DayStatus = '';
-                    $AfterShiftWH = '';
-                    $BeforeShift = '';
-                    $DOT = '';
-                    $Late_Status = 0;
-                    $NetLateM = 0;
-                    $Nopay = 0;
-                    $Nopay_Hrs = 0;
+                    $from_date     = '';
+                    $from_time     = '';
+                    $to_date       = '';
+                    $to_time       = '';
+                    $Day_Type      = 0;
+                    $lateM         = '';
+                    $ED            = '';
+                    $DayStatus     = '';
+                    $AfterShiftWH  = '';
+                    $BeforeShift   = '';
+                    $DOT           = '';
+                    $Late_Status   = 0;
+                    $NetLateM      = 0;
+                    $Nopay         = 0;
+                    $Nopay_Hrs     = 0;
                     $Att_Allowance = 0;
 
                     $shift_code = null;
-                    $found = true;
+                    $found      = true;
                     for ($i = 0; $i < $query_length; $i++) {
                         if ($found) {
                             //shift code eka
                             $shift_code = $emp_shifts[$i]->ShiftCode;
                             //date time ekathukarala hada gannawa
-                            $shift_time = $emp_shifts[$i]->FromTime;
+                            $shift_time          = $emp_shifts[$i]->FromTime;
                             $check_time_withdate = $FromDate . " " . $shift_time;
                             //date format ekkt gannawa
                             $check_time_withdate_dateformat = new DateTime($check_time_withdate);
@@ -141,7 +141,7 @@ class Attendance_Process_New extends CI_Controller
                             $dateTimeMinus2Hours->modify('-2 hours');
                             $check_minus_date = $dateTimeMinus2Hours->format('Y-m-d');
                             $check_minus_time = $dateTimeMinus2Hours->format('H:i:s');
-                            //payak ekathu karanawa
+                                                                                        //payak ekathu karanawa
                             $dateTimePlus1Hour = clone $check_time_withdate_dateformat; // Clone to keep original
                             $dateTimePlus1Hour->modify('+4.5 hour');
                             $check_plus_date = $dateTimePlus1Hour->format('Y-m-d');
@@ -155,7 +155,7 @@ class Attendance_Process_New extends CI_Controller
                             tbl_u_attendancedata where Enroll_No='$EmpNo' and AttDate='" . $check_minus_date . "' AND (AttTime BETWEEN '" . $check_minus_time . "' AND '" . $check_plus_time . "') AND Status='0'");
                             $InDate = $dt_in_Records['dt_Records'][0]->AttDate;
                             $InTime = $dt_in_Records['dt_Records'][0]->INTime;
-                            if (!empty($InDate)) {
+                            if (! empty($InDate)) {
                                 $found = false;
                             }
                             if (empty($InDate)) {
@@ -165,20 +165,20 @@ class Attendance_Process_New extends CI_Controller
                     }
                     // tbl_individual_roster eken shift details tika gannawa
                     $rosterDetails['shift'] = $this->Db_model->getfilteredData("select `ID_Roster`,`ShType`,`ShiftDay`,`FDate`,`FTime`,`TDate`,`TTime`,`GracePrd`,`HDSession` from tbl_individual_roster where FDate = '$FromDate' AND EmpNo = '$EmpNo' ");
-                    $ID_Roster = $rosterDetails['shift'][0]->ID_Roster;
-                    $shift_day = $rosterDetails['shift'][0]->ShiftDay;
-                    $shift_type = $rosterDetails['shift'][0]->ShType;
-                    $from_date = $rosterDetails['shift'][0]->FDate;
+                    $ID_Roster              = $rosterDetails['shift'][0]->ID_Roster;
+                    $shift_day              = $rosterDetails['shift'][0]->ShiftDay;
+                    $shift_type             = $rosterDetails['shift'][0]->ShType;
+                    $from_date              = $rosterDetails['shift'][0]->FDate;
                     //shift code eka hamunata passe ithuru process eka kalana hari//////////////////////////////////ex:- ot / late /ed mekata passe
-                    if (!empty($shift_code) || $shift_code != null || $shift_code != '') {
+                    if (! empty($shift_code) || $shift_code != null || $shift_code != '') {
                         //shift eke details gannaww
                         $ShiftDetails['shift'] = $this->Db_model->getfilteredData("SELECT * FROM tbl_shifts WHERE tbl_shifts.ShiftCode = '$shift_code'");
-                        $from_time = $ShiftDetails['shift'][0]->FromTime;
-                        $to_time = $ShiftDetails['shift'][0]->ToTime;
-                        $cutofftime = $ShiftDetails['shift'][0]->FHDSessionEndTime;
+                        $from_time             = $ShiftDetails['shift'][0]->FromTime;
+                        $to_time               = $ShiftDetails['shift'][0]->ToTime;
+                        $cutofftime            = $ShiftDetails['shift'][0]->FHDSessionEndTime;
                         // $GracePrd = $ShiftDetails['shift'][0]->GracePrd;
                         //shift eke next day thibboth todate eka wenas karanaw
-                        if (!empty($ShiftDetails['shift'][0]->NextDay) || $ShiftDetails['shift'][0]->NextDay != 0) {
+                        if (! empty($ShiftDetails['shift'][0]->NextDay) || $ShiftDetails['shift'][0]->NextDay != 0) {
                             $to_date = date('Y-m-d', strtotime($from_date . ' +1 day'));
                             //out time eka hoyanawa
                             $dt_out_Records['dt_out_Records'] = $this->Db_model->getfilteredData("select max(AttTime) as OutTime,Enroll_No,AttDate from
@@ -190,7 +190,7 @@ class Attendance_Process_New extends CI_Controller
                             //out time eka hoyanawa
                             $out_time_eka_over_one_hour = new DateTime($InTime);
                             $out_time_eka_over_one_hour->modify('+1 hour');
-                            $updated_inTime = $out_time_eka_over_one_hour->format('H:i:s');
+                            $updated_inTime                   = $out_time_eka_over_one_hour->format('H:i:s');
                             $dt_out_Records['dt_out_Records'] = $this->Db_model->getfilteredData("select max(AttTime) as OutTime,Enroll_No,AttDate from
                             tbl_u_attendancedata where Enroll_No='$EmpNo' and AttDate='" . $FromDate . "' AND AttTime > '" . $updated_inTime . "' AND Status='1' ");
                             $OutDate = $dt_out_Records['dt_out_Records'][0]->AttDate;
@@ -208,14 +208,14 @@ class Attendance_Process_New extends CI_Controller
                             FROM tbl_shift_config INNER JOIN tbl_empmaster ON tbl_shift_config.Emp_No = tbl_empmaster.EmpNo
                             INNER JOIN tbl_shifts ON tbl_shift_config.Shift_Id = tbl_shifts.ShiftCode WHERE tbl_shift_config.Emp_No = '$EmpNo' AND tbl_shifts.NextDay = '1' ORDER BY tbl_shifts.ShiftCode");
 
-                            $two_found = true;
+                            $two_found        = true;
                             $two_query_length = count($next_day_yana_wena_shift);
 
                             for ($i = 0; $i < $two_query_length; $i++) {
                                 if ($two_found) {
                                     //date time ekathukarala hada gannawa
-                                    $two_shift_time = $next_day_yana_wena_shift[$i]->FromTime;
-                                    $two_shift_code = $next_day_yana_wena_shift[$i]->ShiftCode;
+                                    $two_shift_time          = $next_day_yana_wena_shift[$i]->FromTime;
+                                    $two_shift_code          = $next_day_yana_wena_shift[$i]->ShiftCode;
                                     $two_check_time_withdate = $FromDate . " " . $two_shift_time;
                                     //date format ekkt gannawa
                                     $two_check_time_withdate_dateformat = new DateTime($two_check_time_withdate);
@@ -224,19 +224,19 @@ class Attendance_Process_New extends CI_Controller
                                     $two_dateTimeMinus2Hours->modify('-2 hours');
                                     $two_check_minus_date = $two_dateTimeMinus2Hours->format('Y-m-d');
                                     $two_check_minus_time = $two_dateTimeMinus2Hours->format('H:i:s');
-                                    //payak ekathu karanawa
+                                                                                                        //payak ekathu karanawa
                                     $two_dateTimePlus1Hour = clone $two_check_time_withdate_dateformat; // Clone to keep original
                                     $two_dateTimePlus1Hour->modify('+4.5 hour');
                                     $two_check_plus_date = $two_dateTimePlus1Hour->format('Y-m-d');
                                     $two_check_plus_time = $two_dateTimePlus1Hour->format('H:i:s');
                                     //two shift eka intime eka athara ekkda balanaw
                                     $timeToCheck = strtotime($InTime);
-                                    $startTime = strtotime($two_check_minus_time);
-                                    $endTime = strtotime($two_check_plus_time);
+                                    $startTime   = strtotime($two_check_minus_time);
+                                    $endTime     = strtotime($two_check_plus_time);
                                     // if($two_check_minus_time < $InTime && $InTime < $two_check_plus_time){}
                                     if ($timeToCheck >= $startTime && $timeToCheck <= $endTime) {
                                         //out time eka hoyanawa
-                                        $two_new_date = date('Y-m-d', strtotime($from_date . ' +1 day'));
+                                        $two_new_date                     = date('Y-m-d', strtotime($from_date . ' +1 day'));
                                         $dt_out_Records['dt_out_Records'] = $this->Db_model->getfilteredData("select max(AttTime) as OutTime,Enroll_No,AttDate from
                                         tbl_u_attendancedata where Enroll_No='$EmpNo' and AttDate='" . $two_new_date . "' AND Status='1' ");
                                         $OutDate = $dt_out_Records['dt_out_Records'][0]->AttDate;
@@ -245,60 +245,77 @@ class Attendance_Process_New extends CI_Controller
                                         //shift code eka
                                         $two_found = false;
                                         //dewaniyata hambuna next day yana shift eke out time ekk thiyenawann from time to time maru karanw
-                                        if ($two_shift_code != null && $two_shift_code != $shift_code && !empty($InTime) && !empty($OutTime)) {
+                                        if ($two_shift_code != null && $two_shift_code != $shift_code && ! empty($InTime) && ! empty($OutTime)) {
                                             //shift eke details gannaww
                                             $ShiftDetails['shift'] = $this->Db_model->getfilteredData("SELECT * FROM tbl_shifts WHERE tbl_shifts.ShiftCode = '$two_shift_code'");
-                                            $from_time = $ShiftDetails['shift'][0]->FromTime;
-                                            $to_time = $ShiftDetails['shift'][0]->ToTime;
-                                            $cutofftime = $ShiftDetails['shift'][0]->FHDSessionEndTime;
+                                            $from_time             = $ShiftDetails['shift'][0]->FromTime;
+                                            $to_time               = $ShiftDetails['shift'][0]->ToTime;
+                                            $cutofftime            = $ShiftDetails['shift'][0]->FHDSessionEndTime;
                                         }
                                     }
                                 }
                             }
                         }
                         if ($InTime != '' && (($InTime != $OutTime && $InDate == $OutDate) || ($InDate != $OutDate)) && $OutTime != '') {
-                            $Nopay = 0;
+                            $Nopay     = 0;
                             $DayStatus = 'PR';
                             $Nopay_Hrs = 0;
-                            $Day_Type = 1;
+                            $Day_Type  = 1;
                         }
 
                         $lateM = 0;
                         // $BeforeShift = 0;
-                        $Late_Status = 0;
-                        $NetLateM = 0;
-                        $ED = 0;
-                        $EDF = 0;
+                        $Late_Status   = 0;
+                        $NetLateM      = 0;
+                        $ED            = 0;
+                        $EDF           = 0;
                         $Att_Allowance = 1;
-                        $Nopay = 0;
-                        $AfterShiftWH = 0;
-                        $lateM = 0; //late minutes
-                        // $ED = 0; //ED minutes
+                        $Nopay         = 0;
+                        $AfterShiftWH  = 0;
+                        $lateM         = 0; //late minutes
+                                            // $ED = 0; //ED minutes
 
                         $iCalcHaffT = 0;
 
+                        // BreakIN/Out ganna thena
+                        //  Break IN/OUT
+                        $breakIn  = $this->Db_model->getfilteredData("SELECT AttTime AS BreakINTime, AttDate FROM tbl_u_attendancedata WHERE Enroll_No='$EmpNo' AND AttDate='$FromDate' AND Status='3' LIMIT 1");
+                        $breakOut = $this->Db_model->getfilteredData("SELECT AttTime AS BreakOutTime, AttDate FROM tbl_u_attendancedata WHERE Enroll_No='$EmpNo' AND AttDate='$FromDate' AND Status='4' LIMIT 1");
+
+                        $BreakInTime  = ! empty($breakIn[0]->BreakINTime) ? $breakIn[0]->BreakINTime : '';
+                        $BreakOutTime = ! empty($breakOut[0]->BreakOutTime) ? $breakOut[0]->BreakOutTime : '';
+
+                        $Day       = $shift->ShType;
+                        $SHFT      = $shift->FTime;
+                        $SHTT      = $shift->TTime;
+                        $Shift_Day = $shift->ShiftDay;
+                        $ShiftType = $shift->ShType;
+                        $ID_Roster = $shift->ID_roster;
+                        $DayType   = $shift->Day_Type;
+                        $GracePrd  = $shift->GracePrd;
+
                         //ot hadana thana ********
                         $ApprovedExH = 0;
-                        $SH_EX_OT = 0;
-                        $icalData = 0;
+                        $SH_EX_OT    = 0;
+                        $icalData    = 0;
                         if ($settings[0]->ST == 1) {
                             if ($settings[0]->Ot_e == 1) {
                                 if ($OutTime != '' && $InTime != $OutTime && $InTime != '' && $OutTime != "00:00:00") {
 
                                     //min time to ot eka hada gannawa group setting table eken
                                     $min_time_to_ot = $settings[0]->Min_time_t_ot_e;
-                                    $dateTime = new DateTime($to_time);
+                                    $dateTime       = new DateTime($to_time);
                                     $dateTime->add(new DateInterval('PT' . $min_time_to_ot . 'M'));
                                     $shift_evning = $dateTime->format('H:i:s');
 
                                     if ($shift_evning < $OutTime) {
-                                        $fromtime = $to_date . " " . $to_time;
-                                        $totime = $OutDate . " " . $OutTime;
-                                        $timestamp1 = strtotime($fromtime);
-                                        $timestamp2 = strtotime($totime);
+                                        $fromtime                = $to_date . " " . $to_time;
+                                        $totime                  = $OutDate . " " . $OutTime;
+                                        $timestamp1              = strtotime($fromtime);
+                                        $timestamp2              = strtotime($totime);
                                         $time_difference_seconds = ($timestamp2 - $timestamp1);
                                         $time_difference_minutes = $time_difference_seconds / 60;
-                                        $icalData = round($time_difference_minutes, 2);
+                                        $icalData                = round($time_difference_minutes, 2);
                                     }
 
                                     // Out wunma passe OT
@@ -312,49 +329,49 @@ class Attendance_Process_New extends CI_Controller
                         } else {
                             if ($OutTime != '' && $InTime != $OutTime && $InTime != '' && $OutTime != "00:00:00") {
                                 //shift time eka hada gannawa
-                                $SHFT = $from_date . " " . $from_time;
-                                $SHTT = $to_date . " " . $to_time;
-                                $timestamp1 = strtotime($SHFT);
-                                $timestamp2 = strtotime($SHTT);
-                                $Shift_duration_time = ($timestamp2 - $timestamp1);
+                                $SHFT                    = $from_date . " " . $from_time;
+                                $SHTT                    = $to_date . " " . $to_time;
+                                $timestamp1              = strtotime($SHFT);
+                                $timestamp2              = strtotime($SHTT);
+                                $Shift_duration_time     = ($timestamp2 - $timestamp1);
                                 $time_difference_minutes = $Shift_duration_time / 60;
-                                $shift_munites = round($time_difference_minutes);
+                                $shift_munites           = round($time_difference_minutes);
 
                                 //shortleave thibboth e time eka adu karala danawa
                                 $ShortLeave = $this->Db_model->getfilteredData("SELECT * FROM tbl_shortlive WHERE EmpNo = $EmpNo AND tbl_shortlive.Date = '$FromDate' ");
-                                if (!empty($ShortLeave[0]->Is_Approve)) {
-                                    $shortleave_ftime = $ShortLeave[0]->from_time;
-                                    $shortleave_ttime = $ShortLeave[0]->to_time;
-                                    $shortleavetimestamp1 = strtotime($shortleave_ftime);
-                                    $shortleavetimestamp2 = strtotime($shortleave_ttime);
-                                    $shortleave_duration_time = ($shortleavetimestamp2 - $shortleavetimestamp1);
+                                if (! empty($ShortLeave[0]->Is_Approve)) {
+                                    $shortleave_ftime                   = $ShortLeave[0]->from_time;
+                                    $shortleave_ttime                   = $ShortLeave[0]->to_time;
+                                    $shortleavetimestamp1               = strtotime($shortleave_ftime);
+                                    $shortleavetimestamp2               = strtotime($shortleave_ttime);
+                                    $shortleave_duration_time           = ($shortleavetimestamp2 - $shortleavetimestamp1);
                                     $shortleave_time_difference_minutes = $shortleave_duration_time / 60;
-                                    $shortleave_munites = round($shortleave_time_difference_minutes);
-                                    $shift_munites = ($shift_munites - $shortleave_munites);
+                                    $shortleave_munites                 = round($shortleave_time_difference_minutes);
+                                    $shift_munites                      = ($shift_munites - $shortleave_munites);
                                 }
                                 //half day e time eka adu karala danawa
                                 $HaffDayaLeave = $this->Db_model->getfilteredData("SELECT * FROM tbl_leave_entry where EmpNo = $EmpNo and Leave_Date = '$FromDate' AND Leave_Count='0.5' AND Is_Approve = '1' ");
-                                if (!empty($HaffDayaLeave[0]->Is_Approve)) {
+                                if (! empty($HaffDayaLeave[0]->Is_Approve)) {
 
-                                    $halfday_fromtime = $from_date . " " . $cutofftime;
-                                    $halfday_totime = $from_date . " " . $from_time;
-                                    $halfday_timestamp1 = strtotime($halfday_fromtime);
-                                    $halfday_timestamp2 = strtotime($halfday_totime);
+                                    $halfday_fromtime                = $from_date . " " . $cutofftime;
+                                    $halfday_totime                  = $from_date . " " . $from_time;
+                                    $halfday_timestamp1              = strtotime($halfday_fromtime);
+                                    $halfday_timestamp2              = strtotime($halfday_totime);
                                     $halfday_time_difference_seconds = ($halfday_timestamp1 - $halfday_timestamp2);
                                     $halfday_time_difference_minutes = $halfday_time_difference_seconds / 60;
-                                    $halfd_late = round($halfday_time_difference_minutes);
-                                    $DayStatus = 'HFD';
-                                    $shift_munites = ($shift_munites - $halfd_late);
+                                    $halfd_late                      = round($halfday_time_difference_minutes);
+                                    $DayStatus                       = 'HFD';
+                                    $shift_munites                   = ($shift_munites - $halfd_late);
                                 }
                                 //in out time hada gannawa
-                                $In_time_date_config = $InDate . " " . $InTime;
-                                $Out_time_date_config = $OutDate . " " . $OutTime;
-                                $timepunchstamp1 = strtotime($In_time_date_config);
-                                $timepunchstamp2 = strtotime($Out_time_date_config);
-                                $In_out_time_duration = ($timepunchstamp2 - $timepunchstamp1);
+                                $In_time_date_config               = $InDate . " " . $InTime;
+                                $Out_time_date_config              = $OutDate . " " . $OutTime;
+                                $timepunchstamp1                   = strtotime($In_time_date_config);
+                                $timepunchstamp2                   = strtotime($Out_time_date_config);
+                                $In_out_time_duration              = ($timepunchstamp2 - $timepunchstamp1);
                                 $time_difference_inouttime_minutes = $In_out_time_duration / 60;
-                                $inout_munit = round($time_difference_inouttime_minutes);
-                                $check_ot_or_late = ($inout_munit - $shift_munites);
+                                $inout_munit                       = round($time_difference_inouttime_minutes);
+                                $check_ot_or_late                  = ($inout_munit - $shift_munites);
                                 if ($check_ot_or_late > 0) {
                                     $AfterShiftWH = $check_ot_or_late;
                                 }
@@ -363,14 +380,14 @@ class Attendance_Process_New extends CI_Controller
 
                         //Late hadana thana ********
                         $iCalclate = 0;
-                        $iCalc = 0;
+                        $iCalc     = 0;
                         if ($settings[0]->ST == 1) {
                             if ($settings[0]->Late == 1) {
                                 if ($InTime != '' && $InTime != $OutTime || $OutTime != '') {
 
                                     $late_grass_period = $settings[0]->late_Grs_prd;
-                                    $fromData = $from_date . " " . $from_time;
-                                    $toData = $InDate . " " . $InTime;
+                                    $fromData          = $from_date . " " . $from_time;
+                                    $toData            = $InDate . " " . $InTime;
 
                                     $timestamp1 = strtotime($fromData);
                                     $timestamp2 = strtotime($toData);
@@ -380,24 +397,24 @@ class Attendance_Process_New extends CI_Controller
                                     $minutes = floor($diff_seconds / 60);
                                     $seconds = $diff_seconds % 60;
 
-                                    // Convert seconds to decimal (e.g., 34 seconds becomes 0.34)
+                                                                       // Convert seconds to decimal (e.g., 34 seconds becomes 0.34)
                                     $decimal_seconds = $seconds / 100; // Note: this just appends the seconds after decimal point
 
-                                    $late = $minutes + $decimal_seconds;
+                                    $late      = $minutes + $decimal_seconds;
                                     $iCalclate = number_format($late, 2);
-                                    $lateM = $iCalclate;
+                                    $lateM     = $iCalclate;
                                     // kalin gihhilanm haff day ekak thiynwda balanna
                                     $HaffDayaLeave = $this->Db_model->getfilteredData("SELECT * FROM tbl_leave_entry where EmpNo = $EmpNo and Leave_Date = '$FromDate' AND Leave_Count='0.5' AND Is_Approve = '1' ");
-                                    if (!empty($HaffDayaLeave[0]->Is_Approve)) {
+                                    if (! empty($HaffDayaLeave[0]->Is_Approve)) {
                                         if ($cutofftime != '00:00:00') {
-                                            $fromtime = $from_date . " " . $cutofftime;
-                                            $totime = $InDate . " " . $InTime;
-                                            $timestamp1 = strtotime($fromtime);
-                                            $timestamp2 = strtotime($totime);
+                                            $fromtime                = $from_date . " " . $cutofftime;
+                                            $totime                  = $InDate . " " . $InTime;
+                                            $timestamp1              = strtotime($fromtime);
+                                            $timestamp2              = strtotime($totime);
                                             $time_difference_seconds = ($timestamp2 - $timestamp1);
                                             $time_difference_minutes = $time_difference_seconds / 60;
-                                            $iCalc = round($time_difference_minutes);
-                                            $DayStatus = 'HFD';
+                                            $iCalc                   = round($time_difference_minutes);
+                                            $DayStatus               = 'HFD';
                                         }
                                         if ($iCalc <= 0) {
                                             // $iCalcHaff = 0;
@@ -407,49 +424,49 @@ class Attendance_Process_New extends CI_Controller
                                         }
                                     }
                                     $ShortLeave = $this->Db_model->getfilteredData("SELECT * FROM tbl_shortlive WHERE EmpNo = $EmpNo AND tbl_shortlive.Date = '$FromDate' ");
-                                    if (!empty($ShortLeave[0]->Is_Approve)) {
+                                    if (! empty($ShortLeave[0]->Is_Approve)) {
                                         // Morning In Time ekata kalin short leave thiywam
-                                        $SHFtime = $ShortLeave[0]->from_time;
-                                        $SHTtime = $ShortLeave[0]->to_time;
-                                        $InTimeSrt = strtotime($InTime);
-                                        $SHToTimeSrt = strtotime($SHTtime);
+                                        $SHFtime      = $ShortLeave[0]->from_time;
+                                        $SHTtime      = $ShortLeave[0]->to_time;
+                                        $InTimeSrt    = strtotime($InTime);
+                                        $SHToTimeSrt  = strtotime($SHTtime);
                                         $iCalcShortLT = round(($InTimeSrt - $SHToTimeSrt) / 60);
                                         if ($SHFtime <= $fromtime) {
                                             if ($iCalcShortLT <= 0) {
                                                 // welawta ewilla
-                                                $lateM = 0;
+                                                $lateM       = 0;
                                                 $Late_Status = 0;
-                                                $DayStatus = 'SL';
+                                                $DayStatus   = 'SL';
                                             } else {
                                                 // welatwa ewilla ne(short leave ektath passe late /haffDay ne )
-                                                $lateM = $iCalcShortLT;
+                                                $lateM     = $iCalcShortLT;
                                                 $DayStatus = 'SL';
                                             }
                                         }
                                         // Get the BreakkIN
                                         $dt_Breakin_Records['dt_Records'] = $this->Db_model->getfilteredData("select min(AttTime) as INTime,Enroll_No,AttDate from tbl_u_attendancedata where Enroll_No='$EmpNo' and AttDate='" . $FromDate . "' AND Status='3' ");
-                                        $BreakInRecords = $dt_Breakin_Records['dt_Records'][0]->AttDate;
-                                        $BreakInDate = $dt_Breakin_Records['dt_Records'][0]->AttDate;
-                                        $BreakInTime = $dt_Breakin_Records['dt_Records'][0]->INTime;
-                                        $BreakInRec = 1;
+                                        $BreakInRecords                   = $dt_Breakin_Records['dt_Records'][0]->AttDate;
+                                        $BreakInDate                      = $dt_Breakin_Records['dt_Records'][0]->AttDate;
+                                        $BreakInTime                      = $dt_Breakin_Records['dt_Records'][0]->INTime;
+                                        $BreakInRec                       = 1;
 
                                         // Get the BreakOut
                                         $dt_Breakout_Records['dt_out_Records'] = $this->Db_model->getfilteredData("select max(AttTime) as OutTime,Enroll_No,AttDate from tbl_u_attendancedata where Enroll_No='$EmpNo' and AttDate='" . $FromDate . "' AND Status='4' ");
-                                        $BreakOutDate = $dt_Breakout_Records['dt_out_Records'][0]->AttDate;
-                                        $BreakOutTime = $dt_Breakout_Records['dt_out_Records'][0]->OutTime;
-                                        $BreakOutRec = 0;
-                                        $BreakOutRecords = $dt_Breakout_Records['dt_out_Records'][0]->AttDate;
+                                        $BreakOutDate                          = $dt_Breakout_Records['dt_out_Records'][0]->AttDate;
+                                        $BreakOutTime                          = $dt_Breakout_Records['dt_out_Records'][0]->OutTime;
+                                        $BreakOutRec                           = 0;
+                                        $BreakOutRecords                       = $dt_Breakout_Records['dt_out_Records'][0]->AttDate;
                                         // // ShortLeave thani eka [(After)atharameda]
                                         if ($BreakInTime != null && $BreakOutTime != null) {
-                                            $BreakInTime = $dt_Breakin_Records['dt_Records'][0]->INTime;
+                                            $BreakInTime  = $dt_Breakin_Records['dt_Records'][0]->INTime;
                                             $BreakOutTime = $dt_Breakout_Records['dt_out_Records'][0]->OutTime;
                                             //Late(Short)
-                                            $SHFtime = $ShortLeave[0]->from_time;
-                                            $SHTtime = $ShortLeave[0]->to_time;
-                                            $BreakOutTimeSrt = strtotime($BreakOutTime);
-                                            $SHToTimeSrt = strtotime($SHTtime);
+                                            $SHFtime          = $ShortLeave[0]->from_time;
+                                            $SHTtime          = $ShortLeave[0]->to_time;
+                                            $BreakOutTimeSrt  = strtotime($BreakOutTime);
+                                            $SHToTimeSrt      = strtotime($SHTtime);
                                             $iCalcShortLTIntv = round(($BreakOutTimeSrt - $SHToTimeSrt) / 60);
-                                            $DayStatus = 'SL';
+                                            $DayStatus        = 'SL';
                                             if ($iCalcShortLTIntv <= 0) {
                                                 // welawta ewilla
                                             } else if ($iCalcShortLTIntv >= 0) {
@@ -464,51 +481,51 @@ class Attendance_Process_New extends CI_Controller
                             if ($OutTime != '' && $InTime != $OutTime && $InTime != '' && $OutTime != "00:00:00") {
                                 //shift time eka hada gannawa
 
-                                $SHFT = $from_date . " " . $from_time;
-                                $SHTT = $to_date . " " . $to_time;
-                                $timestamp1 = strtotime($SHFT);
-                                $timestamp2 = strtotime($SHTT);
-                                $Shift_duration_time = ($timestamp2 - $timestamp1);
+                                $SHFT                    = $from_date . " " . $from_time;
+                                $SHTT                    = $to_date . " " . $to_time;
+                                $timestamp1              = strtotime($SHFT);
+                                $timestamp2              = strtotime($SHTT);
+                                $Shift_duration_time     = ($timestamp2 - $timestamp1);
                                 $time_difference_minutes = $Shift_duration_time / 60;
-                                $shift_munites = round($time_difference_minutes);
+                                $shift_munites           = round($time_difference_minutes);
 
                                 //shortleave thibboth e time eka adu karala danawa
                                 $ShortLeave = $this->Db_model->getfilteredData("SELECT * FROM tbl_shortlive WHERE EmpNo = $EmpNo AND tbl_shortlive.Date = '$FromDate' ");
-                                if (!empty($ShortLeave[0]->Is_Approve)) {
-                                    $shortleave_ftime = $ShortLeave[0]->from_time;
-                                    $shortleave_ttime = $ShortLeave[0]->to_time;
-                                    $shortleavetimestamp1 = strtotime($shortleave_ftime);
-                                    $shortleavetimestamp2 = strtotime($shortleave_ttime);
-                                    $shortleave_duration_time = ($shortleavetimestamp2 - $shortleavetimestamp1);
+                                if (! empty($ShortLeave[0]->Is_Approve)) {
+                                    $shortleave_ftime                   = $ShortLeave[0]->from_time;
+                                    $shortleave_ttime                   = $ShortLeave[0]->to_time;
+                                    $shortleavetimestamp1               = strtotime($shortleave_ftime);
+                                    $shortleavetimestamp2               = strtotime($shortleave_ttime);
+                                    $shortleave_duration_time           = ($shortleavetimestamp2 - $shortleavetimestamp1);
                                     $shortleave_time_difference_minutes = $shortleave_duration_time / 60;
-                                    $shortleave_munites = round($shortleave_time_difference_minutes);
-                                    $shift_munites = ($shift_munites - $shortleave_munites);
+                                    $shortleave_munites                 = round($shortleave_time_difference_minutes);
+                                    $shift_munites                      = ($shift_munites - $shortleave_munites);
                                 }
                                 //half day e time eka adu karala danawa
                                 $HaffDayaLeave = $this->Db_model->getfilteredData("SELECT * FROM tbl_leave_entry where EmpNo = $EmpNo and Leave_Date = '$FromDate' AND Leave_Count='0.5' AND Is_Approve = '1' ");
-                                if (!empty($HaffDayaLeave[0]->Is_Approve)) {
+                                if (! empty($HaffDayaLeave[0]->Is_Approve)) {
                                     // echo "okkkk";
-                                    $halfday_fromtime = $from_date . " " . $cutofftime;
-                                    $halfday_totime = $from_date . " " . $from_time;
-                                    $halfday_timestamp1 = strtotime($halfday_fromtime);
-                                    $halfday_timestamp2 = strtotime($halfday_totime);
+                                    $halfday_fromtime                = $from_date . " " . $cutofftime;
+                                    $halfday_totime                  = $from_date . " " . $from_time;
+                                    $halfday_timestamp1              = strtotime($halfday_fromtime);
+                                    $halfday_timestamp2              = strtotime($halfday_totime);
                                     $halfday_time_difference_seconds = ($halfday_timestamp1 - $halfday_timestamp2);
                                     $halfday_time_difference_minutes = $halfday_time_difference_seconds / 60;
-                                    $halfd_late = round($halfday_time_difference_minutes);
-                                    $DayStatus = 'HFD';
+                                    $halfd_late                      = round($halfday_time_difference_minutes);
+                                    $DayStatus                       = 'HFD';
                                     $shift_munites;
                                     $shift_munites = ($shift_munites - $halfd_late);
                                 }
 
                                 //in out time hada gannawa
-                                $In_time_date_config = $InDate . " " . $InTime;
-                                $Out_time_date_config = $OutDate . " " . $OutTime;
-                                $timepunchstamp1 = strtotime($In_time_date_config);
-                                $timepunchstamp2 = strtotime($Out_time_date_config);
-                                $In_out_time_duration = ($timepunchstamp2 - $timepunchstamp1);
+                                $In_time_date_config               = $InDate . " " . $InTime;
+                                $Out_time_date_config              = $OutDate . " " . $OutTime;
+                                $timepunchstamp1                   = strtotime($In_time_date_config);
+                                $timepunchstamp2                   = strtotime($Out_time_date_config);
+                                $In_out_time_duration              = ($timepunchstamp2 - $timepunchstamp1);
                                 $time_difference_inouttime_minutes = $In_out_time_duration / 60;
-                                $inout_munit = round($time_difference_inouttime_minutes);
-                                $check_ot_or_late = ($shift_munites - $inout_munit);
+                                $inout_munit                       = round($time_difference_inouttime_minutes);
+                                $check_ot_or_late                  = ($shift_munites - $inout_munit);
                                 if ($check_ot_or_late > 0) {
                                     $lateM = $check_ot_or_late;
                                 }
@@ -519,28 +536,28 @@ class Attendance_Process_New extends CI_Controller
                         if ($settings[0]->ST == 1) {
                             if ($settings[0]->Ed == 1) {
                                 if ($InTime != $OutTime && $OutTime != '') {
-                                    $fromtime = $to_date . " " . $to_time;
-                                    $totime = $OutDate . " " . $OutTime;
-                                    $timestamp1 = strtotime($totime);
-                                    $timestamp2 = strtotime($fromtime);
+                                    $fromtime                = $to_date . " " . $to_time;
+                                    $totime                  = $OutDate . " " . $OutTime;
+                                    $timestamp1              = strtotime($totime);
+                                    $timestamp2              = strtotime($fromtime);
                                     $time_difference_seconds = ($timestamp2 - $timestamp1);
                                     $time_difference_minutes = $time_difference_seconds / 60;
-                                    $iCalcHaffED = round($time_difference_minutes, 2);
+                                    $iCalcHaffED             = round($time_difference_minutes, 2);
                                     if ($iCalcHaffED > 0) {
                                         $ED = $iCalcHaffED;
                                     }
                                     // kalin gihhilanm haff day ekak thiynwda balanna
                                     $HaffDayaLeave = $this->Db_model->getfilteredData("SELECT * FROM tbl_leave_entry where EmpNo = $EmpNo and Leave_Date = '$FromDate' AND Leave_Count='0.5' AND Is_Approve = '1' ");
-                                    if (!empty($HaffDayaLeave[0]->Is_Approve)) {
+                                    if (! empty($HaffDayaLeave[0]->Is_Approve)) {
                                         if ($cutofftime != '00:00:00') {
-                                            $fromtime = $from_date . " " . $cutofftime;
-                                            $totime = $OutDate . " " . $OutTime;
-                                            $timestamp1 = strtotime($totime);
-                                            $timestamp2 = strtotime($fromtime);
+                                            $fromtime                = $from_date . " " . $cutofftime;
+                                            $totime                  = $OutDate . " " . $OutTime;
+                                            $timestamp1              = strtotime($totime);
+                                            $timestamp2              = strtotime($fromtime);
                                             $time_difference_seconds = ($timestamp2 - $timestamp1);
                                             $time_difference_minutes = $time_difference_seconds / 60;
-                                            $iCalcHaff = round($time_difference_minutes, 2);
-                                            $DayStatus = 'HFD';
+                                            $iCalcHaff               = round($time_difference_minutes, 2);
+                                            $DayStatus               = 'HFD';
                                         }
                                         if ($iCalcHaff <= 0) {
                                             $ED = 0;
@@ -606,84 +623,84 @@ class Attendance_Process_New extends CI_Controller
                         }
 
                         if (($InDate == $OutDate && $InTime == $OutTime) || $OutTime == null || $OutTime == '') {
-                            $DayStatus = 'MS';
-                            $Late_Status = 0;
-                            $Nopay = 0;
-                            $Nopay_Hrs = 0;
-                            $Allnomalotmin = 0;
+                            $DayStatus      = 'MS';
+                            $Late_Status    = 0;
+                            $Nopay          = 0;
+                            $Nopay_Hrs      = 0;
+                            $Allnomalotmin  = 0;
                             $Alldoubleotmin = 0;
-                            $Day_Type = 0.5;
+                            $Day_Type       = 0.5;
                         }
 
                         /*
                          * If In Available & Out Missing
                          */
                         if ($InTime != '' && ($InDate == $OutDate && $InTime == $OutTime)) {
-                            $DayStatus = 'MS';
-                            $Late_Status = 0;
-                            $Nopay = 0;
-                            $Nopay_Hrs = 0;
-                            $Allnomalotmin = 0;
+                            $DayStatus      = 'MS';
+                            $Late_Status    = 0;
+                            $Nopay          = 0;
+                            $Nopay_Hrs      = 0;
+                            $Allnomalotmin  = 0;
                             $Alldoubleotmin = 0;
-                            $Day_Type = 0.5;
+                            $Day_Type       = 0.5;
                         }
 
                         // If Out Available & In Missing
                         if ($OutTime != '' && ($InDate == $OutDate && $InTime == $OutTime)) {
-                            $DayStatus = 'MS';
-                            $Late_Status = 0;
-                            $Nopay = 0;
-                            $Nopay_Hrs = 0;
-                            $Allnomalotmin = 0;
+                            $DayStatus      = 'MS';
+                            $Late_Status    = 0;
+                            $Nopay          = 0;
+                            $Nopay_Hrs      = 0;
+                            $Allnomalotmin  = 0;
                             $Alldoubleotmin = 0;
-                            $Day_Type = 0.5;
+                            $Day_Type       = 0.5;
                         }
 
                         // If In Available & Out Missing
                         if ($InTime != '' && $OutTime == '') {
-                            $DayStatus = 'MS';
-                            $Late_Status = 0;
-                            $Nopay = 0;
-                            $Nopay_Hrs = 0;
-                            $Allnomalotmin = 0;
+                            $DayStatus      = 'MS';
+                            $Late_Status    = 0;
+                            $Nopay          = 0;
+                            $Nopay_Hrs      = 0;
+                            $Allnomalotmin  = 0;
                             $Alldoubleotmin = 0;
-                            $Day_Type = 0.5;
+                            $Day_Type       = 0.5;
                         }
 
                         // If Out Available & In Missing
                         if ($OutTime != '' && $InTime == '') {
-                            $DayStatus = 'MS';
-                            $Late_Status = 0;
-                            $Nopay = 0;
-                            $Nopay_Hrs = 0;
-                            $Allnomalotmin = 0;
+                            $DayStatus      = 'MS';
+                            $Late_Status    = 0;
+                            $Nopay          = 0;
+                            $Nopay_Hrs      = 0;
+                            $Allnomalotmin  = 0;
                             $Alldoubleotmin = 0;
-                            $Day_Type = 0.5;
+                            $Day_Type       = 0.5;
                         }
                     } elseif (empty($shift_code)) {
                         //shift code eka na kiyanne eda absent dawasak hari off dawasak hari//////////////////////////////////
 
-                        $DayStatus = 'CHECK';
+                        $DayStatus   = 'CHECK';
                         $ApprovedExH = 0;
-                        $InDate = '';
-                        $InTime = '';
-                        $OutDate = '';
-                        $OutTime = '';
+                        $InDate      = '';
+                        $InTime      = '';
+                        $OutDate     = '';
+                        $OutTime     = '';
 
-                        $from_date = $FromDate;
-                        $from_time = '';
-                        $to_date = '';
-                        $to_time = '';
-                        $Day_Type = 0;
-                        $lateM = '';
-                        $ED = '';
-                        $AfterShiftWH = '';
-                        $BeforeShift = '';
-                        $DOT = '';
-                        $Late_Status = 0;
-                        $NetLateM = 0;
-                        $Nopay = 0;
-                        $Nopay_Hrs = 0;
+                        $from_date     = $FromDate;
+                        $from_time     = '';
+                        $to_date       = '';
+                        $to_time       = '';
+                        $Day_Type      = 0;
+                        $lateM         = '';
+                        $ED            = '';
+                        $AfterShiftWH  = '';
+                        $BeforeShift   = '';
+                        $DOT           = '';
+                        $Late_Status   = 0;
+                        $NetLateM      = 0;
+                        $Nopay         = 0;
+                        $Nopay_Hrs     = 0;
                         $Att_Allowance = 0;
                         if ($shift_type == 'OFF') {
                             $DayStatus = 'OFF';
@@ -693,47 +710,47 @@ class Attendance_Process_New extends CI_Controller
                     $Holiday = $this->Db_model->getfilteredData("select count(Hdate) as HasRow from tbl_holidays where Hdate = '$FromDate' ");
                     if ($Holiday[0]->HasRow == 1) {
                         if ($InTime != '' && (($InTime != $OutTime && $InDate == $OutDate) || ($InDate != $OutDate)) && $OutTime != '') {
-                            $Nopay = 0;
+                            $Nopay     = 0;
                             $DayStatus = 'HDPR';
                             $Nopay_Hrs = 0;
-                            $Day_Type = 1;
+                            $Day_Type  = 1;
                         } else {
-                            $DayStatus = 'HD';
-                            $Nopay = 0;
-                            $Nopay_Hrs = 0;
+                            $DayStatus     = 'HD';
+                            $Nopay         = 0;
+                            $Nopay_Hrs     = 0;
                             $Att_Allowance = 0;
-                            $Day_Type = 0;
+                            $Day_Type      = 0;
                         }
                     }
                     $Leave = $this->Db_model->getfilteredData("SELECT * FROM tbl_leave_entry where EmpNo = $EmpNo and Leave_Date = '$FromDate' AND Leave_Count='1' AND Is_Approve = '1' ");
-                    if (!empty($Leave[0]->Is_Approve)) {
-                        $Nopay = 0;
-                        $DayStatus = 'LV';
-                        $Nopay_Hrs = 0;
+                    if (! empty($Leave[0]->Is_Approve)) {
+                        $Nopay         = 0;
+                        $DayStatus     = 'LV';
+                        $Nopay_Hrs     = 0;
                         $Att_Allowance = 0;
-                        $Day_Type = 1;
+                        $Day_Type      = 1;
                         if ($InTime != '' && $InTime != $OutTime && $OutTime != '') {
-                            $Nopay = 0;
+                            $Nopay     = 0;
                             $DayStatus = 'LV-PR';
                             $Nopay_Hrs = 0;
-                            $Day_Type = 1;
+                            $Day_Type  = 1;
                         }
                     }
-                    $halfd_late = 0;
+                    $halfd_late    = 0;
                     $HaffDayaLeave = $this->Db_model->getfilteredData("SELECT * FROM tbl_leave_entry where EmpNo = $EmpNo and Leave_Date = '$FromDate' AND Leave_Count='0.5' AND Is_Approve = '1' ");
-                    if (!empty($HaffDayaLeave[0]->Is_Approve)) {
+                    if (! empty($HaffDayaLeave[0]->Is_Approve)) {
 
                         if ($InTime == '' && $OutTime == '') {
 
-                            $fromtime = $from_date . " " . $cutofftime;
-                            $totime = $from_date . " " . $from_time;
-                            $timestamp1 = strtotime($totime);
-                            $timestamp2 = strtotime($fromtime);
+                            $fromtime                = $from_date . " " . $cutofftime;
+                            $totime                  = $from_date . " " . $from_time;
+                            $timestamp1              = strtotime($totime);
+                            $timestamp2              = strtotime($fromtime);
                             $time_difference_seconds = ($timestamp2 - $timestamp1);
                             $time_difference_minutes = $time_difference_seconds / 60;
-                            $halfd_late = round($time_difference_minutes, 2);
-                            $DayStatus = 'HFD-AB';
-                            $lateM = $halfd_late;
+                            $halfd_late              = round($time_difference_minutes, 2);
+                            $DayStatus               = 'HFD-AB';
+                            $lateM                   = $halfd_late;
                         }
                     }
 
@@ -811,7 +828,7 @@ class Attendance_Process_New extends CI_Controller
                     echo "<br/>";
                     echo "<br/>";
                     // die;
-                    // $data_arr   = ["InRec" => 1, "InDate" => $FromDate, "InTime" => $InTime, "TDate" => $to_date, "TTime" => $to_time, "OutRec" => 1, "Day_Type" => $Day_Type, "OutDate" => $OutDate, "OutTime" => $OutTime, "nopay" => $Nopay, "Is_processed" => 1, "DayStatus" => $DayStatus, "BeforeExH" => $BeforeShift, "AfterExH" => $AfterShiftWH, "LateSt" => $Late_Status, "LateM" => $lateM, "EarlyDepMin" => $ED, "NetLateM" => $NetLateM, "ApprovedExH" => $ApprovedExH, "nopay_hrs" => $Nopay_Hrs, "Att_Allow" => $Att_Allowance, "DOT" => $DOT];
+                    // $data_arr   = ["InRec" => 1, "InDate" => $FromDate, "InTime" => $InTime, "TDate" => $to_date, "TTime" => $to_time, "OutRec" => 1, "Day_Type" => $Day_Type, "OutDate" => $OutDate, "OutTime" => $OutTime, "nopay" => $Nopay, "Is_processed" => 1, "DayStatus" => $DayStatus, "BeforeExH" => $BeforeShift, "AfterExH" => $AfterShiftWH, "LateSt" => $Late_Status, "LateM" => $lateM, "EarlyDepMin" => $ED, "NetLateM" => $NetLateM, "ApprovedExH" => $ApprovedExH, "nopay_hrs" => $Nopay_Hrs, "Att_Allow" => $Att_Allowance, "DOT" => $DOT,BreackInTime1" => $BreakInTime, "BreackOutTime1" => $BreakOutTime];
                     // $whereArray = ["ID_roster" => $ID_Roster];
                     // $result     = $this->Db_model->updateData("tbl_individual_roster", $data_arr, $whereArray);
                 }
