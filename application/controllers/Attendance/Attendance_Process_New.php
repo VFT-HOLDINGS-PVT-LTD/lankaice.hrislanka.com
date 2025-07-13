@@ -285,14 +285,14 @@ class Attendance_Process_New extends CI_Controller
                         $BreakInTime  = ! empty($breakIn[0]->BreakINTime) ? $breakIn[0]->BreakINTime : '';
                         $BreakOutTime = ! empty($breakOut[0]->BreakOutTime) ? $breakOut[0]->BreakOutTime : '';
 
-                        $Day       = $shift->ShType;
-                        $SHFT      = $shift->FTime;
-                        $SHTT      = $shift->TTime;
-                        $Shift_Day = $shift->ShiftDay;
-                        $ShiftType = $shift->ShType;
-                        $ID_Roster = $shift->ID_roster;
-                        $DayType   = $shift->Day_Type;
-                        $GracePrd  = $shift->GracePrd;
+                        // $Day       = $shift->ShType;
+                        // $SHFT      = $shift->FTime;
+                        // $SHTT      = $shift->TTime;
+                        // $Shift_Day = $shift->ShiftDay;
+                        // $ShiftType = $shift->ShType;
+                        // $ID_Roster = $shift->ID_roster;
+                        // $DayType   = $shift->Day_Type;
+                        // $GracePrd  = $shift->GracePrd;
 
                         //ot hadana thana ********
                         $ApprovedExH = 0;
@@ -302,28 +302,129 @@ class Attendance_Process_New extends CI_Controller
                             if ($settings[0]->Ot_e == 1) {
                                 if ($OutTime != '' && $InTime != $OutTime && $InTime != '' && $OutTime != "00:00:00") {
 
+                                    $from_Data = $from_date . " " . $from_time;
+                                    $to_Data   = $to_date . " " . $to_time;
+
+                                    // 8-8 labor set eka - start
+                                    if ($from_time == '08:00:00' && $to_time == '08:00:00' && $from_date != $to_date) {
+                                        $OT_OUT = '00:00:01';
+                                        $OT_IN  = '17:00:00';
+
+                                        $date_out = new DateTime("today $OT_OUT");
+                                        $date_in  = new DateTime("today $OT_IN");
+
+                                        // Handle case where OT_OUT is after midnight (next day)
+                                        if ($date_out < $date_in) {
+                                            $date_out->modify('+1 day');
+                                        }
+
+                                        $interval = $date_in->diff($date_out);
+
+                                        // Format as hours and minutes only
+                                        $OT = $interval->format('%H:%I');
+
+                                        if ($OT >= 0) {
+                                            $AfterShiftWH = $OT;
+                                        } else {
+                                            $AfterShiftWH = 0;
+                                        }
+
+                                        // labor set eka next date eke 8n passe work karalanam
+                                        if ($to_time < $OutTime) {
+                                            if ($to_date == $OutDate) { // dawas =na wenna one
+                                                                            // Calculate OT
+                                                $from = new DateTime("today $to_time");
+                                                $to   = new DateTime("today $OutTime");
+
+                                                $interval = $from->diff($to);
+                                                $OT       = $interval->format('%H:%I');
+
+                                                // Add OT to AfterShiftWH
+                                                list($h1, $m1) = explode(':', $AfterShiftWH);
+                                                list($h2, $m2) = explode(':', $OT);
+
+                                                $totalMinutes = ($h1 * 60 + $m1) + ($h2 * 60 + $m2);
+
+                                                $hours   = floor($totalMinutes / 60);
+                                                $minutes = $totalMinutes % 60;
+
+                                                $AfterShiftWH = sprintf('%02d:%02d', $hours, $minutes);
+                                            }
+                                        }
+
+                                    } // 8-8 labor set eka - end
+
+                                    // 9-9 supervisor set eka - start
+                                    if ($from_time == '09:00:00' && $to_time == '09:00:00' && $from_date != $to_date) {
+                                        $OT_OUT = '00:00:01';
+                                        $OT_IN  = '18:00:00';
+
+                                        $date_out = new DateTime("today $OT_OUT");
+                                        $date_in  = new DateTime("today $OT_IN");
+
+                                        // Handle case where OT_OUT is after midnight (next day)
+                                        if ($date_out < $date_in) {
+                                            $date_out->modify('+1 day');
+                                        }
+
+                                        $interval = $date_in->diff($date_out);
+
+                                        // Format as hours and minutes only
+                                        $OT = $interval->format('%H:%I');
+
+                                        if ($OT >= 0) {
+                                            $AfterShiftWH = $OT;
+                                        } else {
+                                            $AfterShiftWH = 0;
+                                        }
+
+                                        // labor set eka next date eke 8n passe work karalanam
+                                        if ($to_time < $OutTime) {
+                                            if ($to_date == $OutDate) { // dawas =na wenna one
+                                                                            // Calculate OT
+                                                $from = new DateTime("today $to_time");
+                                                $to   = new DateTime("today $OutTime");
+
+                                                $interval = $from->diff($to);
+                                                $OT       = $interval->format('%H:%I');
+
+                                                // Add OT to AfterShiftWH
+                                                list($h1, $m1) = explode(':', $AfterShiftWH);
+                                                list($h2, $m2) = explode(':', $OT);
+
+                                                $totalMinutes = ($h1 * 60 + $m1) + ($h2 * 60 + $m2);
+
+                                                $hours   = floor($totalMinutes / 60);
+                                                $minutes = $totalMinutes % 60;
+
+                                                $AfterShiftWH = sprintf('%02d:%02d', $hours, $minutes);
+                                            }
+                                        }
+
+                                    } // 9-9 supervisor set eka - end
+
                                     //min time to ot eka hada gannawa group setting table eken
-                                    $min_time_to_ot = $settings[0]->Min_time_t_ot_e;
-                                    $dateTime       = new DateTime($to_time);
-                                    $dateTime->add(new DateInterval('PT' . $min_time_to_ot . 'M'));
-                                    $shift_evning = $dateTime->format('H:i:s');
+                                    // $min_time_to_ot = $settings[0]->Min_time_t_ot_e;
+                                    // $dateTime       = new DateTime($to_time);
+                                    // $dateTime->add(new DateInterval('PT' . $min_time_to_ot . 'M'));
+                                    // $shift_evning = $dateTime->format('H:i:s');
 
-                                    if ($shift_evning < $OutTime) {
-                                        $fromtime                = $to_date . " " . $to_time;
-                                        $totime                  = $OutDate . " " . $OutTime;
-                                        $timestamp1              = strtotime($fromtime);
-                                        $timestamp2              = strtotime($totime);
-                                        $time_difference_seconds = ($timestamp2 - $timestamp1);
-                                        $time_difference_minutes = $time_difference_seconds / 60;
-                                        $icalData                = round($time_difference_minutes, 2);
-                                    }
+                                    // if ($shift_evning < $OutTime) {
+                                    //     $fromtime                = $to_date . " " . $to_time;
+                                    //     $totime                  = $OutDate . " " . $OutTime;
+                                    //     $timestamp1              = strtotime($fromtime);
+                                    //     $timestamp2              = strtotime($totime);
+                                    //     $time_difference_seconds = ($timestamp2 - $timestamp1);
+                                    //     $time_difference_minutes = $time_difference_seconds / 60;
+                                    //     $icalData                = round($time_difference_minutes, 2);
+                                    // }
 
-                                    // Out wunma passe OT
-                                    if ($icalData >= 0) {
-                                        $AfterShiftWH = $icalData;
-                                    } else {
-                                        $AfterShiftWH = 0;
-                                    }
+                                    // // Out wunma passe OT
+                                    // if ($icalData >= 0) {
+                                    //     $AfterShiftWH = $icalData;
+                                    // } else {
+                                    //     $AfterShiftWH = 0;
+                                    // }
                                 }
                             }
                         } else {
