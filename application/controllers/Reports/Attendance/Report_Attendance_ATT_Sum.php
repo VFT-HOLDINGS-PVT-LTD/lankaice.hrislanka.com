@@ -147,9 +147,9 @@ class Report_Attendance_ATT_Sum extends CI_Controller {
                                                                     ir.EarlyDepMin,
                                                                     br.B_name,
                                                                     ir.BreackOutTime1,
-                                                                    ir.BreackInTime1
+                                                                    ir.BreackInTime1,
+                                                                    ir.AfterExH
                                                                    
-
                                                                 FROM
                                                                     tbl_individual_roster ir
                                                                         LEFT JOIN

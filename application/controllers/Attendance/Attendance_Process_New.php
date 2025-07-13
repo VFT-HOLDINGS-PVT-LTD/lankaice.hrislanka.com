@@ -321,7 +321,12 @@ class Attendance_Process_New extends CI_Controller
                                         $interval = $date_in->diff($date_out);
 
                                         // Format as hours and minutes only
-                                        $OT = $interval->format('%H:%I');
+                                        // $OT = $interval->format('%H:%I');
+
+                                        // Convert the interval to total minutes
+                                        $hours   = (int) $interval->format('%h');
+                                        $minutes = (int) $interval->format('%i');
+                                        $OT      = ($hours * 60) + $minutes;
 
                                         if ($OT >= 0) {
                                             $AfterShiftWH = $OT;
@@ -340,15 +345,22 @@ class Attendance_Process_New extends CI_Controller
                                                 $OT       = $interval->format('%H:%I');
 
                                                 // Add OT to AfterShiftWH
-                                                list($h1, $m1) = explode(':', $AfterShiftWH);
+                                                // list($h1, $m1) = explode(':', $AfterShiftWH);
+                                                // list($h2, $m2) = explode(':', $OT);
+
+                                                // $totalMinutes = ($h1 * 60 + $m1) + ($h2 * 60 + $m2);
+
+                                                // $hours   = floor($totalMinutes / 60);
+                                                // $minutes = $totalMinutes % 60;
+
+                                                // $AfterShiftWH = sprintf('%02d:%02d', $hours, $minutes);
+
+                                                // Extract OT as minutes
                                                 list($h2, $m2) = explode(':', $OT);
+                                                $OTMinutes     = ($h2 * 60) + $m2;
 
-                                                $totalMinutes = ($h1 * 60 + $m1) + ($h2 * 60 + $m2);
-
-                                                $hours   = floor($totalMinutes / 60);
-                                                $minutes = $totalMinutes % 60;
-
-                                                $AfterShiftWH = sprintf('%02d:%02d', $hours, $minutes);
+                                                // Add OT to AfterShiftWH (in minutes)
+                                                $AfterShiftWH += $OTMinutes;
                                             }
                                         }
 
@@ -369,8 +381,10 @@ class Attendance_Process_New extends CI_Controller
 
                                         $interval = $date_in->diff($date_out);
 
-                                        // Format as hours and minutes only
-                                        $OT = $interval->format('%H:%I');
+                                        // Convert the interval to total minutes
+                                        $hours   = (int) $interval->format('%h');
+                                        $minutes = (int) $interval->format('%i');
+                                        $OT      = ($hours * 60) + $minutes;
 
                                         if ($OT >= 0) {
                                             $AfterShiftWH = $OT;
@@ -388,20 +402,33 @@ class Attendance_Process_New extends CI_Controller
                                                 $interval = $from->diff($to);
                                                 $OT       = $interval->format('%H:%I');
 
-                                                // Add OT to AfterShiftWH
-                                                list($h1, $m1) = explode(':', $AfterShiftWH);
+                                                // Extract OT as minutes
                                                 list($h2, $m2) = explode(':', $OT);
+                                                $OTMinutes     = ($h2 * 60) + $m2;
 
-                                                $totalMinutes = ($h1 * 60 + $m1) + ($h2 * 60 + $m2);
-
-                                                $hours   = floor($totalMinutes / 60);
-                                                $minutes = $totalMinutes % 60;
-
-                                                $AfterShiftWH = sprintf('%02d:%02d', $hours, $minutes);
+                                                // Add OT to AfterShiftWH (in minutes)
+                                                $AfterShiftWH += $OTMinutes;
                                             }
                                         }
 
                                     } // 9-9 supervisor set eka - end
+
+                                    // 8-5 office set eka - start
+                                    if ($from_time == '08:00:00' && $to_time == '17:00:00') {
+                                        $fromtime = $to_date . " " . $to_time;
+                                        $totime   = $OutDate . " " . $OutTime;
+
+                                        $timestamp1 = strtotime($fromtime);
+                                        $timestamp2 = strtotime($totime);
+
+                                        $time_difference_seconds = $timestamp2 - $timestamp1;
+
+                                        if ($time_difference_seconds >= 0) {
+                                            $AfterShiftWH = round($time_difference_seconds / 60); // only full minutes
+                                        } else {
+                                            $AfterShiftWH = 0;
+                                        }
+                                    } // 8-5 office set eka - end
 
                                     //min time to ot eka hada gannawa group setting table eken
                                     // $min_time_to_ot = $settings[0]->Min_time_t_ot_e;
@@ -866,84 +893,84 @@ class Attendance_Process_New extends CI_Controller
                     } else {
                         $ED = 0;
                     }
-                    echo $ID_Roster;
-                    echo "<br/>";
-                    echo $EmpNo;
-                    echo "<br/>";
-                    echo $FromDate;
-                    echo "<br/>";
-                    echo "from date-" . $from_date;
-                    echo "<br/>";
-                    echo "from time-" . $from_time;
-                    echo "<br/>";
-                    echo "in date-" . $InDate;
-                    echo "<br/>";
-                    echo "in time-" . $InTime;
-                    echo "<br/>";
-                    echo "<br/>";
-                    echo "to date-" . $to_date;
-                    echo "<br/>";
-                    echo "to time-" . $to_time;
-                    echo "<br/>";
-                    echo "out date-" . $OutDate;
-                    echo "<br/>";
-                    echo "out time-" . $OutTime;
-                    echo "<br/>";
-                    echo "Late " . $lateM;
-                    echo "<br/>";
-                    echo "ED " . $ED;
-                    echo "<br/>";
-                    echo "DayStatus " . $DayStatus;
-                    echo "<br/>";
-                    echo "OT " . $AfterShiftWH;
-                    echo "<br/>";
-                    echo "dot" . $DOT;
-                    echo "<br/>";
-                    // // echo "in 3-" . $InmoTime3;
-                    // // echo "<br/>";
-                    // // echo "out 3-" . $OutDate3;
-                    // // echo "<br/>";
-                    // // echo "out 3-" . $OutTime3;
-                    // // echo "<br/>";
-                    // // echo "workhours1-" . $workhours1;
-                    // // echo "<br/>";
-                    // // echo "workhours2-" . $workhours2;
-                    // // echo "<br/>";
-                    // // echo "workhours3-" . $workhours3;
-                    // // echo "<br/>";
-                    // // echo "workhours3-" . $workhours;
-                    // // echo "<br/>";
-                    // // echo "dot1-" . $DOT1;
-                    // // echo "<br/>";
-                    // // echo "dot2-" . $DOT2;
-                    // // echo "<br/>";
-                    // // echo "dot3-" . $DOT3;
-                    // // echo "<br/>";
-                    // // echo "dot-" . $DOT;
-                    // // echo "<br/>";
-                    // // echo "out" . $OutTime;
-                    // // echo "<br/>";
-                    // // echo "outd-" . $OutDate;
-                    echo "<br/>";
-                    echo "<br/>";
-                    echo "<br/>";
-                    echo "<br/>";
+                    // echo $ID_Roster;
+                    // echo "<br/>";
+                    // echo $EmpNo;
+                    // echo "<br/>";
+                    // echo $FromDate;
+                    // echo "<br/>";
+                    // echo "from date-" . $from_date;
+                    // echo "<br/>";
+                    // echo "from time-" . $from_time;
+                    // echo "<br/>";
+                    // echo "in date-" . $InDate;
+                    // echo "<br/>";
+                    // echo "in time-" . $InTime;
+                    // echo "<br/>";
+                    // echo "<br/>";
+                    // echo "to date-" . $to_date;
+                    // echo "<br/>";
+                    // echo "to time-" . $to_time;
+                    // echo "<br/>";
+                    // echo "out date-" . $OutDate;
+                    // echo "<br/>";
+                    // echo "out time-" . $OutTime;
+                    // echo "<br/>";
+                    // echo "Late " . $lateM;
+                    // echo "<br/>";
+                    // echo "ED " . $ED;
+                    // echo "<br/>";
+                    // echo "DayStatus " . $DayStatus;
+                    // echo "<br/>";
+                    // echo "OT " . $AfterShiftWH;
+                    // echo "<br/>";
+                    // echo "dot" . $DOT;
+                    // echo "<br/>";
+                    // // // echo "in 3-" . $InmoTime3;
+                    // // // echo "<br/>";
+                    // // // echo "out 3-" . $OutDate3;
+                    // // // echo "<br/>";
+                    // // // echo "out 3-" . $OutTime3;
+                    // // // echo "<br/>";
+                    // // // echo "workhours1-" . $workhours1;
+                    // // // echo "<br/>";
+                    // // // echo "workhours2-" . $workhours2;
+                    // // // echo "<br/>";
+                    // // // echo "workhours3-" . $workhours3;
+                    // // // echo "<br/>";
+                    // // // echo "workhours3-" . $workhours;
+                    // // // echo "<br/>";
+                    // // // echo "dot1-" . $DOT1;
+                    // // // echo "<br/>";
+                    // // // echo "dot2-" . $DOT2;
+                    // // // echo "<br/>";
+                    // // // echo "dot3-" . $DOT3;
+                    // // // echo "<br/>";
+                    // // // echo "dot-" . $DOT;
+                    // // // echo "<br/>";
+                    // // // echo "out" . $OutTime;
+                    // // // echo "<br/>";
+                    // // // echo "outd-" . $OutDate;
+                    // echo "<br/>";
+                    // echo "<br/>";
+                    // echo "<br/>";
+                    // echo "<br/>";
                     // die;
-                    // $data_arr   = ["InRec" => 1, "InDate" => $FromDate, "InTime" => $InTime, "TDate" => $to_date, "TTime" => $to_time, "OutRec" => 1, "Day_Type" => $Day_Type, "OutDate" => $OutDate, "OutTime" => $OutTime, "nopay" => $Nopay, "Is_processed" => 1, "DayStatus" => $DayStatus, "BeforeExH" => $BeforeShift, "AfterExH" => $AfterShiftWH, "LateSt" => $Late_Status, "LateM" => $lateM, "EarlyDepMin" => $ED, "NetLateM" => $NetLateM, "ApprovedExH" => $ApprovedExH, "nopay_hrs" => $Nopay_Hrs, "Att_Allow" => $Att_Allowance, "DOT" => $DOT,BreackInTime1" => $BreakInTime, "BreackOutTime1" => $BreakOutTime];
-                    // $whereArray = ["ID_roster" => $ID_Roster];
-                    // $result     = $this->Db_model->updateData("tbl_individual_roster", $data_arr, $whereArray);
+                    $data_arr   = ["InRec" => 1, "InDate" => $FromDate, "InTime" => $InTime, "TDate" => $to_date, "TTime" => $to_time, "OutRec" => 1, "Day_Type" => $Day_Type, "OutDate" => $OutDate, "OutTime" => $OutTime, "nopay" => $Nopay, "Is_processed" => 1, "DayStatus" => $DayStatus, "BeforeExH" => $BeforeShift, "AfterExH" => $AfterShiftWH, "LateSt" => $Late_Status, "LateM" => $lateM, "EarlyDepMin" => $ED, "NetLateM" => $NetLateM, "ApprovedExH" => $ApprovedExH, "nopay_hrs" => $Nopay_Hrs, "Att_Allow" => $Att_Allowance, "DOT" => $DOT,"BreackInTime1" => $BreakInTime, "BreackOutTime1" =>  $BreakOutTime ];
+                    $whereArray = ["ID_roster" => $ID_Roster];
+                    $result     = $this->Db_model->updateData("tbl_individual_roster", $data_arr, $whereArray);
                 }
             }
             // }
-            // $this->session->set_flashdata('success_message', 'Attendance Process successfully');
-            // redirect('/Attendance/Attendance_Process_New');
+            $this->session->set_flashdata('success_message', 'Attendance Process successfully');
+            redirect('/Attendance/Attendance_Process_New');
         }
-        // else {
-        //     $this->session->set_flashdata('success_message', 'Attendance Process successfully');
-        //     redirect('/Attendance/Attendance_Process_New');
-        // }
-        // $this->session->set_flashdata('success_message', 'Attendance Process successfully');
-        // redirect('/Attendance/Attendance_Process_New');
+        else {
+            $this->session->set_flashdata('success_message', 'Attendance Process successfully');
+            redirect('/Attendance/Attendance_Process_New');
+        }
+        $this->session->set_flashdata('success_message', 'Attendance Process successfully');
+        redirect('/Attendance/Attendance_Process_New');
     }
 
 }
