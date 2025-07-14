@@ -134,6 +134,9 @@ class Report_Attendance_ATT_Sum extends CI_Controller {
                                                                     ir.EmpNo,
                                                                     Emp.Emp_Full_Name,
                                                                     ir.FDate,
+                                                                    ir.TDate,
+                                                                    ir.InDate,
+                                                                    ir.OutDate,
                                                                     ir.ShiftDay,
                                                                     ir.ShType,
                                                                     ir.FTime,
@@ -148,7 +151,8 @@ class Report_Attendance_ATT_Sum extends CI_Controller {
                                                                     br.B_name,
                                                                     ir.BreackOutTime1,
                                                                     ir.BreackInTime1,
-                                                                    ir.AfterExH
+                                                                    ir.AfterExH,
+                                                                    ir.NumShift
                                                                    
                                                                 FROM
                                                                     tbl_individual_roster ir

@@ -294,6 +294,7 @@ class Attendance_Process_New extends CI_Controller
                         // $DayType   = $shift->Day_Type;
                         // $GracePrd  = $shift->GracePrd;
 
+                        $NumShift = 0;
                         //ot hadana thana ********
                         $ApprovedExH = 0;
                         $SH_EX_OT    = 0;
@@ -304,6 +305,9 @@ class Attendance_Process_New extends CI_Controller
 
                                     $from_Data = $from_date . " " . $from_time;
                                     $to_Data   = $to_date . " " . $to_time;
+
+                                    // $IN_Data = $InDate ." ". $InTime;
+                                    // $Out_Data =  $OutDate ." ". $OutTime;
 
                                     // 8-8 labor set eka - start
                                     if ($from_time == '08:00:00' && $to_time == '08:00:00' && $from_date != $to_date) {
@@ -327,6 +331,8 @@ class Attendance_Process_New extends CI_Controller
                                         $hours   = (int) $interval->format('%h');
                                         $minutes = (int) $interval->format('%i');
                                         $OT      = ($hours * 60) + $minutes;
+
+                                        $NumShift = 3;
 
                                         if ($OT >= 0) {
                                             $AfterShiftWH = $OT;
@@ -363,6 +369,65 @@ class Attendance_Process_New extends CI_Controller
                                                 $AfterShiftWH += $OTMinutes;
                                             }
                                         }
+
+                                        // $Time6 = "06:00:00";
+                                        // $Time1230 = "12:30:00";
+                                        // $Time8 = "08:00:00";
+
+                                        // $Time7 = "07:00:00";
+                                        // $Time10 = "10:30:00";
+
+                                        // $Time23 = "23:59:59";
+                                        // $Time658 = "06:58:00";
+
+                                        // $Time1659 = "16:59:59";
+
+                                        // $from_date_Time6 = $from_date . " " . $Time6;
+                                        // $IN_Data = $InDate ." ". $InTime;
+                                        // $OutDate_Time1230 = $from_date ." ". $Time1230;
+
+                                        // $from_date_Time8 = $from_date . " " . $Time8;
+
+                                        // $ROutData = $to_Data. " ". $Time7;
+                                        // $ROutData2 = $to_Data. " ". $Time10;
+
+                                        // $ROutData3 = $to_Data. " ". $Time23;
+                                        // $ROutData4 = $to_Data. " ". $Time658;
+                                        // $ROutData5 = $to_Data. " ". $Time1659;
+
+                                        // if (
+                                        //     ($from_date_Time6 <= $IN_Data && $IN_Data <= $from_date_Time8) &&
+                                        //     ($ROutData       <= $OutTime  && $OutTime  <= $ROutData2)
+                                        // ) {
+                                        //     $NumShift = 3;
+
+                                        // } 
+                                        // elseif (
+                                        //     ($from_date_Time6 <= $IN_Data && $IN_Data <= $OutDate_Time1230) &&
+                                        //     ($ROutData3       <= $OutTime && $OutTime <= $ROutData4)
+                                        // ) {
+                                        //     $NumShift = 2;
+
+                                        // } elseif (
+                                        //     ($from_date_Time6 <= $IN_Data && $IN_Data <= $OutDate_Time1230) &&
+                                        //     ($ROutData5       <= $OutTime && $OutTime <= $ROutData3)
+                                        // ) {
+                                        //     $NumShift = 1;
+
+                                        // } else {
+                                        //     $NumShift = 0;
+                                        // }
+
+
+                                        // if ($InTime >= "08:00:00" || $InTime <= "08:00:00" && $OutTime >= "08:00:00" || $OutTime <= "08:00:00") {
+                                        //     $NumShift = 3;
+                                        // }elseif($InTime >= "08:00:00" || $InTime <= "08:00:00" && $OutTime >= "23:59:59" || $OutTime <= "23:59:59"){
+                                        //     $NumShift = 2;
+                                        // }elseif ($InTime >= "08:00:00" || $InTime <= "08:00:00" && $OutTime >= "17:00:00" || $OutTime <= "17:00:00") {
+                                        //     $NumShift = 1;
+                                        // }else{
+                                        //     $NumShift = 0;
+                                        // }
 
                                     } // 8-8 labor set eka - end
 
@@ -422,6 +487,7 @@ class Attendance_Process_New extends CI_Controller
                                         $timestamp2 = strtotime($totime);
 
                                         $time_difference_seconds = $timestamp2 - $timestamp1;
+                                        $NumShift = 1;
 
                                         if ($time_difference_seconds >= 0) {
                                             $AfterShiftWH = round($time_difference_seconds / 60); // only full minutes
@@ -429,6 +495,25 @@ class Attendance_Process_New extends CI_Controller
                                             $AfterShiftWH = 0;
                                         }
                                     } // 8-5 office set eka - end
+
+                                    // $NumShift = 3;
+
+                                    if ($NumShift == 3) {
+                                        if ($from_date != $to_date) {
+                                            if ($OutTime < "04:00:00") {
+                                                $NumShift = 2;
+                                            }
+                                        }
+                                        // $OutTime1 =  $OutDate. " " .$OutTime;
+                                    }
+
+                                    // if ($NumShift != 3) {
+                                    //     if ($NumShift != 1) {
+                                    //         $NumShift = 2;
+                                    //     }
+                                    // }
+
+
 
                                     //min time to ot eka hada gannawa group setting table eken
                                     // $min_time_to_ot = $settings[0]->Min_time_t_ot_e;
@@ -830,6 +915,7 @@ class Attendance_Process_New extends CI_Controller
                         $Nopay         = 0;
                         $Nopay_Hrs     = 0;
                         $Att_Allowance = 0;
+                        $NumShift = 0;
                         if ($shift_type == 'OFF') {
                             $DayStatus = 'OFF';
                         }
@@ -893,6 +979,15 @@ class Attendance_Process_New extends CI_Controller
                     } else {
                         $ED = 0;
                     }
+
+                    // if ($ED >= 0) {
+                       if ($NumShift == 2) {
+                            $ED = 0;
+                        }
+                    // }
+
+                    
+                    
                     // echo $ID_Roster;
                     // echo "<br/>";
                     // echo $EmpNo;
@@ -924,7 +1019,7 @@ class Attendance_Process_New extends CI_Controller
                     // echo "<br/>";
                     // echo "OT " . $AfterShiftWH;
                     // echo "<br/>";
-                    // echo "dot" . $DOT;
+                    // echo "Shift" . $NumShift;
                     // echo "<br/>";
                     // // // echo "in 3-" . $InmoTime3;
                     // // // echo "<br/>";
@@ -956,7 +1051,7 @@ class Attendance_Process_New extends CI_Controller
                     // echo "<br/>";
                     // echo "<br/>";
                     // die;
-                    $data_arr   = ["InRec" => 1, "InDate" => $FromDate, "InTime" => $InTime, "TDate" => $to_date, "TTime" => $to_time, "OutRec" => 1, "Day_Type" => $Day_Type, "OutDate" => $OutDate, "OutTime" => $OutTime, "nopay" => $Nopay, "Is_processed" => 1, "DayStatus" => $DayStatus, "BeforeExH" => $BeforeShift, "AfterExH" => $AfterShiftWH, "LateSt" => $Late_Status, "LateM" => $lateM, "EarlyDepMin" => $ED, "NetLateM" => $NetLateM, "ApprovedExH" => $ApprovedExH, "nopay_hrs" => $Nopay_Hrs, "Att_Allow" => $Att_Allowance, "DOT" => $DOT,"BreackInTime1" => $BreakInTime, "BreackOutTime1" =>  $BreakOutTime ];
+                    $data_arr   = ["InRec" => 1, "InDate" => $FromDate, "InTime" => $InTime, "TDate" => $to_date, "TTime" => $to_time, "OutRec" => 1, "Day_Type" => $Day_Type, "OutDate" => $OutDate, "OutTime" => $OutTime, "nopay" => $Nopay, "Is_processed" => 1, "DayStatus" => $DayStatus, "BeforeExH" => $BeforeShift, "AfterExH" => $AfterShiftWH, "LateSt" => $Late_Status, "LateM" => $lateM, "EarlyDepMin" => $ED, "NetLateM" => $NetLateM, "ApprovedExH" => $ApprovedExH, "nopay_hrs" => $Nopay_Hrs, "Att_Allow" => $Att_Allowance, "DOT" => $DOT,"BreackInTime1" => $BreakInTime, "BreackOutTime1" =>  $BreakOutTime, "NumShift"=>$NumShift ];
                     $whereArray = ["ID_roster" => $ID_Roster];
                     $result     = $this->Db_model->updateData("tbl_individual_roster", $data_arr, $whereArray);
                 }
