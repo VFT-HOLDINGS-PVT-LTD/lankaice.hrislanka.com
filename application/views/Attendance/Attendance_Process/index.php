@@ -162,6 +162,7 @@
                                                                     <?php
                                                                     if ($autorun_settings[0]->status_flag == 1) {
                                                                         ?>
+                                                                        
                                                                         <div id="alert-container">
                                                                             <div class="alert alert-danger" role="alert"
                                                                                 style="margin-top: 30px;">
@@ -173,6 +174,50 @@
                                                                         <?php
                                                                     } elseif ($autorun_settings[0]->status_flag == 0 && $autorun_settings2[0]->status_flag == 0 && $autorun_settings3[0]->status_flag == 0) {
                                                                         ?>
+                                                                        <div class="form-group col-sm-6">
+                                                                        <label for="focusedinput" class="col-sm-4 control-label">Year</label>
+                                                                        <div class="col-sm-8">
+                                                                            <select required="" class="form-control" id="cmb_year" name="cmb_year">
+                                                                                <option value="" default>-- Select --</option>
+                                                                                
+                                                                                <option value="2023">2023</option>
+                                                                                <option value="2024">2024</option>
+                                                                                <option value="2025">2025</option>
+                                                                                <option value="2026">2026</option>
+                                                                                <option value="2027">2027</option>
+                                                                                <option value="2028">2028</option>
+                                                                                <option value="2029">2029</option>
+                                                                                <option value="2030">2030</option>
+
+                                                                            </select>
+                                                                        </div>
+
+                                                                    </div>
+                                                                        <div class="form-group col-sm-6">
+                                                                            <label for="focusedinput"
+                                                                                class="col-sm-4 control-label">Month</label>
+                                                                            <div class="col-sm-8">
+                                                                                <select required="" class="form-control"
+                                                                                    id="cmb_month" name="cmb_month">
+                                                                                    <option value="">--Select--</option>
+                                                                                    <option value="1">January</option>
+                                                                                    <option value="2">February</option>
+                                                                                    <option value="3">March</option>
+                                                                                    <option value="4">April</option>
+                                                                                    <option value="5">May</option>
+                                                                                    <option value="6">June</option>
+                                                                                    <option value="7">July</option>
+                                                                                    <option value="8">August</option>
+                                                                                    <option value="9">September</option>
+                                                                                    <option value="10">October</option>
+                                                                                    <option value="11">November</option>
+                                                                                    <option value="12">December</option>
+                                                                                </select>
+                                                                            </div>
+
+                                                                        </div>
+
+                                                                        <br><br><br><br>
                                                                         <div class="col-sm-8 col-sm-offset-2">
                                                                             <button type="submit" id="submit" name="submit"
                                                                                 class="btn-primary btn-lg fa fa-check">&nbsp;&nbsp;ATTENDANCE
