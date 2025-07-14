@@ -63,6 +63,10 @@ $paydata = $this->Db_model->getfilteredData("select * from tbl_empmaster where E
                                     <li><a href="<?php echo base_url(); ?>Master/Shifts/">SHIFTS</a></li>
                                 <?php endif; ?>
 
+                                <?php if ($currentUser[0]->branches == 1): ?>
+                                    <li><a href="<?php echo base_url(); ?>Master/Shift_config/">SHIFT CONFIG</a></li>
+                                <?php endif; ?>
+
                                 <?php if ($currentUser[0]->weekly_roster == 1): ?>
                                     <li><a href="<?php echo base_url(); ?>Master/Weekly_Roster/">WEEKLY ROSTER PATTERN</a></li>
                                 <?php endif; ?>
