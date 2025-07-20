@@ -799,6 +799,39 @@
                                                                                     </select>
                                                                                 </div>
                                                                                 <div class="form-group">
+                                                                                    <label for="cmb_rept_type"
+                                                                                        class="form-label">Report Type
+                                                                                        <span
+                                                                                            class="required">*</span></label>
+                                                                                    <select class="form-select"
+                                                                                        id="cmb_rept_type"
+                                                                                        name="cmb_rept_type">
+                                                                                        <option value="">-- Select
+                                                                                            Report Type --</option>
+                                                                                        <option value="AttSum">
+                                                                                            Attendance Summary Report
+                                                                                        </option>
+                                                                                        <option value="LateRpt">Late
+                                                                                            Report</option>
+                                                                                        <option value="MissRpt">
+                                                                                            Misspunch Report</option>
+                                                                                        <option value="LvRpt">Leave
+                                                                                            Report</option>
+                                                                                        <option value="SlRpt">Short
+                                                                                            Leave Report</option>
+                                                                                        <option value="MonthRpt">Monthly
+                                                                                            Report</option>
+                                                                                        <option value="PrRpt">Present
+                                                                                            Report</option>
+                                                                                        <option value="AbRpt">Absent
+                                                                                            Report</option>
+                                                                                        <option value="LvSumRpt">Leave
+                                                                                            Summary Report</option>
+                                                                                        <option value="BrkRpt">Break
+                                                                                            IN/OOT Report</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="form-group">
                                                                                     <label for="dpd1"
                                                                                         class="form-label">From Date
                                                                                         <span
@@ -1443,6 +1476,10 @@
             $("#txt_nic").val("");
             $("#cmb_gender").val("");
             $("#cmb_status").val("");
+            $("#dpd1").val("");
+            $("#dpd2").val("");
+            $("#cmb_branch").val("");
+            $("#cmb_rept_type").val("");
 
 
         });
@@ -1753,19 +1790,24 @@
 
                 const d1 = document.getElementById('dpd1').value;
                 const d2 = document.getElementById('dpd2').value;
+                const reportType = document.getElementById('cmb_rept_type').value;
 
-                if (!d1 || !d2) {
+                if (!d1 || !d2 || !reportType) {
                     Swal.fire({
                         icon: 'warning',
-                        title: 'Missing Date',
-                        text: 'Please select both From Date and To Date before generating the report.',
+                        title: 'Missing Information',
+                        text: 'Please select the From Date, To Date, and Report Type before generating the report.',
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'OK'
                     });
                     return;
                 }
 
-                $('#columnConfirmModal').modal('show');
+                if (reportType === 'AttSum') {
+                    $('#columnConfirmModal').modal('show');
+                } else {
+                    form.submit(); // submit directly for other types
+                }
             });
 
             // When confirmed inside modal
@@ -1777,17 +1819,20 @@
             });
 
             // Select All Columns functionality
-            document.getElementById('selectAllColumns').addEventListener('change', function () {
-                const allCheckboxes = document.querySelectorAll('#columnCheckboxes input[type="checkbox"]');
-                allCheckboxes.forEach(function (checkbox) {
-                    if (checkbox.value !== 'EmpNo' && checkbox.value !== 'Emp_Full_Name') {
-                        checkbox.checked = document.getElementById('selectAllColumns').checked;
-                    }
+            const selectAllCheckbox = document.getElementById('selectAllColumns');
+            if (selectAllCheckbox) {
+                selectAllCheckbox.addEventListener('change', function () {
+                    const allCheckboxes = document.querySelectorAll('#columnCheckboxes input[type="checkbox"]');
+                    allCheckboxes.forEach(function (checkbox) {
+                        if (checkbox.value !== 'EmpNo' && checkbox.value !== 'Emp_Full_Name') {
+                            checkbox.checked = selectAllCheckbox.checked;
+                        }
+                    });
                 });
-            });
+            }
         });
-
     </script>
+
     <!-- END-PDF: Script -->
 
     <!-- excel - start -->
@@ -1800,8 +1845,9 @@
 
             const d1 = document.getElementById('dpd1').value;
             const d2 = document.getElementById('dpd2').value;
+            const d3 = document.getElementById('cmb_rept_type').value;
 
-            if (!d1 || !d2) {
+            if (!d1 || !d2 || !d3) {
                 Swal.fire({
                     icon: 'warning',
                     title: 'Missing Date',

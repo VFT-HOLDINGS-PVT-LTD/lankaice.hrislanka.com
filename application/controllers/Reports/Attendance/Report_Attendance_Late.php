@@ -53,7 +53,7 @@ class Report_Attendance_Late extends CI_Controller {
     public function Attendance_Report_By_Cat() {
 
         
-          $data['data_cmp'] = $this->Db_model->getData('Cmp_ID,Company_Name', 'tbl_companyprofile');
+        $data['data_cmp'] = $this->Db_model->getData('Cmp_ID,Company_Name', 'tbl_companyprofile');
 
         $emp = $this->input->post("txt_emp");
         $emp_name = $this->input->post("txt_emp_name");

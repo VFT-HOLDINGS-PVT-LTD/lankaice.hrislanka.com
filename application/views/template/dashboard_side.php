@@ -360,19 +360,19 @@ $paydata = $this->Db_model->getfilteredData("select * from tbl_empmaster where E
                                 <!--    <li><a href="<?php echo base_url(); ?>Reports/Attendance/Report_Attendance_In_Out_Row">MOBILE APP IN OUT</a></li>-->
                                 <!--<?php endif; ?>-->
                                 
-                                <?php if ($currentUser[0]->in_out_report == 1): ?>
+                                <!-- <?php if ($currentUser[0]->in_out_report == 1): ?>
                                     <li><a href="<?php echo base_url(); ?>Reports/Attendance/Report_Attendance_In_Out_misspunch">MISPUNCH REPORT</a></li>
                                 <?php endif; ?>
 
                                 <?php if ($currentUser[0]->in_out_report == 1): ?>
                                     <li><a href="<?php echo base_url(); ?>Reports/Attendance/Report_Attendance_In_Out">MONTHLY REPORTS</a></li>
-                                <?php endif; ?>
+                                <?php endif; ?> -->
 
                                 <!--<?php if ($currentUser[0]->employee_birthdays == 1): ?>-->
                                 <!--    <li><a href="<?php echo base_url(); ?>Reports/Attendance/Report_Attendance_OT">PAYROLL ATTENDANCE DATA</a></li>-->
                                 <!--<?php endif; ?>-->
 
-                                <?php if ($currentUser[0]->absence_report == 1): ?>
+                                <!-- <?php if ($currentUser[0]->absence_report == 1): ?>
                                     <li><a href="form-wizard.html">ABSENCE REPORT</a></li>
                                 <?php endif; ?>
 
@@ -386,12 +386,12 @@ $paydata = $this->Db_model->getfilteredData("select * from tbl_empmaster where E
 
                                 <?php if ($currentUser[0]->late_report == 1): ?>
                                     <li><a href="<?php echo base_url(); ?>Reports/Attendance/Report_Attendance_Late">LATE REPORT</a></li>
-                                <?php endif; ?>
+                                <?php endif; ?> -->
 
                                 <?php if ($currentUser[0]->late_report == 1): ?>
                                     <li><a href="<?php echo base_url(); ?>Reports/Attendance/Report_Attendance_ATT_Sum">ATTENDANCE SUMMERY</a></li>
                                 <?php endif; ?>
-                                <?php if ($currentUser[0]->late_report == 1): ?>
+                                <!-- <?php if ($currentUser[0]->late_report == 1): ?>
                                     <li><a href="<?php echo base_url(); ?>Reports/Attendance/Report_Attendance_ATT_Sum_Ab">ABSENT SUMMERY</a></li>
                                 <?php endif; ?>
                                 <?php if ($currentUser[0]->late_report == 1): ?>
@@ -412,7 +412,7 @@ $paydata = $this->Db_model->getfilteredData("select * from tbl_empmaster where E
                                 
                                 <?php if ($currentUser[0]->late_report == 1): ?>
                                     <li><a href="<?php echo base_url(); ?>Reports/Attendance/Report_Attendance_In_Out_Row_Break">BREAK IN / OUT REPORT</a></li>
-                                <?php endif; ?>
+                                <?php endif; ?> -->
 
                                 <?php if ($currentUser[0]->Attendance_Report == 1): ?>    
                                 </ul>
