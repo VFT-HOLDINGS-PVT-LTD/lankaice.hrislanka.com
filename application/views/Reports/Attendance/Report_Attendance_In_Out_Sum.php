@@ -1,11 +1,6 @@
 <!DOCTYPE html>
-<!--Description of dashboard page
-
-@author Ashan Rathsara-->
 
 <html lang="en">
-
-
 
 <head>
     <title>
@@ -421,11 +416,11 @@
         }
 
         .btn {
-            padding: 14px 32px;
+            padding: 10px 20px;
             border: none;
             border-radius: var(--border-radius-md);
             font-weight: 600;
-            font-size: 16px;
+            font-size: 15px;
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             text-transform: uppercase;
@@ -638,18 +633,14 @@
 <body class="infobar-offcanvas">
 
     <!--header-->
-
     <?php $this->load->view('template/header.php'); ?>
-
     <!--end header-->
 
     <div id="wrapper">
         <div id="layout-static">
 
             <!--dashboard side-->
-
             <?php $this->load->view('template/dashboard_side.php'); ?>
-
             <!--dashboard side end-->
 
             <div class="static-content-wrapper">
@@ -1063,6 +1054,11 @@
                                                                                 <i class="fas fa-file-pdf"></i>
                                                                                 VIEW PDF REPORT
                                                                             </button>
+                                                                            <button type="button"
+                                                                                class="btn btn-primary"
+                                                                                id="exportExcelBtn"><i
+                                                                                    class="fas fa-file-excel"></i>VIEW
+                                                                                EXCEL REPORT</button>
 
                                                                             <button type="button" class="btn btn-danger"
                                                                                 id="cancel">
@@ -1742,7 +1738,7 @@
     <!-- SweetAlert2 CDN -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- START: Script -->
+    <!-- START-PDF: Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const form = document.querySelector('form');
@@ -1792,7 +1788,78 @@
         });
 
     </script>
-    <!-- END: Script -->
+    <!-- END-PDF: Script -->
+
+    <!-- excel - start -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('form');
+            const generateBtn = document.getElementById('generateBtn');
+            const exportExcelBtn = document.getElementById('exportExcelBtn');
+            const confirmSubmitBtn = document.getElementById('confirmSubmitBtn');
+
+            // PDF Generate - Open modal
+            generateBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const d1 = document.getElementById('dpd1').value;
+                const d2 = document.getElementById('dpd2').value;
+
+                if (!d1 || !d2) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Missing Date',
+                        text: 'Please select both From Date and To Date before generating the report.',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
+
+                $('#columnConfirmModal').modal('show');
+            });
+
+            // PDF Confirm Button inside Modal
+            // confirmSubmitBtn.addEventListener('click', function () {
+            //     $('#columnConfirmModal').modal('hide');
+            //     form.setAttribute('action', ''); // Keep default PDF action
+            //     form.submit();
+            // });
+
+            // Excel Export - Submit directly without modal
+            exportExcelBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const d1 = document.getElementById('dpd1').value;
+                const d2 = document.getElementById('dpd2').value;
+
+                if (!d1 || !d2) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Missing Date',
+                        text: 'Please select both From Date and To Date before exporting.',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
+
+                form.setAttribute('action', "<?= base_url('Reports/Attendance/Report_Attendance_ATT_Sum/Export_Excel') ?>");
+                form.submit();
+            });
+
+            // Select All Columns checkbox
+            document.getElementById('selectAllColumns').addEventListener('change', function () {
+                const allCheckboxes = document.querySelectorAll('#columnCheckboxes input[type="checkbox"]');
+                allCheckboxes.forEach(function (checkbox) {
+                    if (checkbox.value !== 'EmpNo' && checkbox.value !== 'Emp_Full_Name') {
+                        checkbox.checked = this.checked;
+                    }
+                }, this);
+            });
+        });
+    </script>
+    <!-- excel - end -->
 
     <script>
         $("#frm_employee").validate({

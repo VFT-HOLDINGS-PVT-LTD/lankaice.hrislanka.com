@@ -318,6 +318,121 @@ public function Attendance_Report_By_Cat()
     $this->load->view('Reports/Attendance/rpt_In_Out_Sum', $data);
 }
 
+public function Export_Excel()
+{
+    $data['data_cmp'] = $this->Db_model->getData('Cmp_ID,Company_Name', 'tbl_companyprofile');
+
+    // Input filters
+    $emp = $this->input->post("txt_emp");
+    $emp_name = $this->input->post("txt_emp_name");
+    $desig = $this->input->post("cmb_desig");
+    $dept = $this->input->post("cmb_dep");
+    $from_date = $this->input->post("txt_from_date");
+    $to_date = $this->input->post("txt_to_date");
+    $branch = $this->input->post("cmb_branch");
+
+    $data['f_date'] = $from_date;
+    $data['t_date'] = $to_date;
+
+    // Build filter
+    $filter = '';
+
+    if (!empty($from_date) && !empty($to_date)) {
+        $filter = " WHERE ir.FDate BETWEEN '$from_date' AND '$to_date'";
+    }
+
+    if (!empty($emp)) {
+        $filter .= empty($filter) ? " WHERE ir.EmpNo = '$emp'" : " AND ir.EmpNo = '$emp'";
+    }
+
+    if (!empty($emp_name)) {
+        $filter .= empty($filter) ? " WHERE Emp.Emp_Full_Name = '$emp_name'" : " AND Emp.Emp_Full_Name = '$emp_name'";
+    }
+
+    if (!empty($desig)) {
+        $filter .= empty($filter) ? " WHERE dsg.Des_ID = '$desig'" : " AND dsg.Des_ID = '$desig'";
+    }
+
+    if (!empty($dept)) {
+        $filter .= empty($filter) ? " WHERE dep.Dep_id = '$dept'" : " AND dep.Dep_id = '$dept'";
+    }
+
+    if (!empty($branch)) {
+        $filter .= empty($filter) ? " WHERE br.B_id = '$branch'" : " AND br.B_id = '$branch'";
+    }
+
+    // Load PhpSpreadsheet objects
+    $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+    $sheet = $spreadsheet->getActiveSheet();
+
+    // Autosize columns A to G
+    foreach(range('A','G') as $columnID) {
+        $sheet->getColumnDimension($columnID)->setAutoSize(true);
+    }
+
+    // Header row
+    $sheet->setCellValue('A1', 'EmpNo');
+    $sheet->setCellValue('B1', 'Emp_Full_Name');
+    $sheet->setCellValue('C1', 'Date');
+    $sheet->setCellValue('D1', 'IN TIME');
+    $sheet->setCellValue('E1', 'OUT TIME');
+    $sheet->setCellValue('F1', 'ST');
+    $sheet->setCellValue('G1', 'LATE');
+
+    // Fetch filtered data
+    $data_set_query = $this->Db_model->getfilteredData1(
+        "SELECT 
+            ir.EmpNo,
+            Emp.Emp_Full_Name,
+            ir.FDate,
+            ir.ShiftDay,
+            ir.ShType,
+            ir.FTime,
+            ir.TTime,
+            ir.InTime,
+            ir.OutTime,
+            ir.DayStatus,
+            ir.ApprovedExH,
+            ir.NetLateM,
+            br.B_name
+         FROM tbl_individual_roster ir
+         LEFT JOIN tbl_empmaster Emp ON Emp.EmpNo = ir.EmpNo
+         LEFT JOIN tbl_designations dsg ON dsg.Des_ID = Emp.Des_ID
+         LEFT JOIN tbl_departments dep ON dep.Dep_id = Emp.Dep_id
+         INNER JOIN tbl_branches br ON Emp.B_id = br.B_id
+         {$filter} 
+         GROUP BY ir.FDate, Emp.EmpNo 
+         ORDER BY Emp.Emp_Full_Name, ir.FDate;"
+    );
+
+    $data_set = $data_set_query->result_array();
+
+    $rowNum = 2; // Start from second row
+
+    foreach ($data_set as $row) {
+        $sheet->setCellValue('A'.$rowNum, $row['EmpNo']);
+        $sheet->setCellValue('B'.$rowNum, $row['Emp_Full_Name']);
+        $sheet->setCellValue('C'.$rowNum, $row['FDate']);
+        $sheet->setCellValue('D'.$rowNum, $row['InTime']);
+        $sheet->setCellValue('E'.$rowNum, $row['OutTime']);
+        $sheet->setCellValue('F'.$rowNum, $row['ShType']);
+        $sheet->setCellValue('G'.$rowNum, $row['NetLateM']);
+        $rowNum++;
+    }
+
+    // Prepare file for download
+    $fileName = 'Attendance_Report_' . date('YmdHis') . '.xlsx';
+
+    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    header('Content-Disposition: attachment; filename="'. $fileName .'"');
+    header('Cache-Control: max-age=0');
+
+    $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+    $writer->save('php://output');
+    exit;
+}
+
+
 
 
 function get_auto_emp_name() {
@@ -335,7 +450,7 @@ function get_auto_emp_name() {
     }
 
     
- public function exportToExcel()
+ public function exportToExcel1()
     {
 
         $data['data_cmp'] = $this->Db_model->getData('Cmp_ID,Company_Name', 'tbl_companyprofile');
