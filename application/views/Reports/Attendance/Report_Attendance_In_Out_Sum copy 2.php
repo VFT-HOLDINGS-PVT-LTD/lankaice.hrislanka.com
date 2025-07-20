@@ -46,9 +46,8 @@
             --border-radius-md: 12px;
             --border-radius-lg: 16px;
             --border-radius-xl: 24px;
-        }
+        }#
 
-        #
         /* body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -677,18 +676,12 @@
 
                                                         <div class="panel-body">
                                                             <div class="row">
- <div class="form-group col-sm-12">
-                                                                    <div class="col-sm-6">
-                                                                        <img class="imagecss1" src="<?php echo base_url(); ?>assets/images/attendance_inout.png" style="margin-left: 0%; margin-bottom: 10px;">
-                                                                    </div>
 
-                                                                </div>
                                                                 <!-- Form Body -->
                                                                 <div class="form-group col-md-12">
                                                                     <form
                                                                         action="<?php echo base_url('Reports/Attendance/Report_Attendance_ATT_Sum/Attendance_Report_By_Cat') ?>"
                                                                         method="POST" target="_blank">
-                                                                        
 
                                                                         <!-- Employee Filters Section -->
                                                                         <div class="form-section">
@@ -721,7 +714,7 @@
                                                                                         id="cmb_desig" name="cmb_desig">
                                                                                         <option value="">-- Select
                                                                                             Designation --</option>
-                                                                                        <?php foreach ($data_desig as $t_data) { ?>
+                                                                                        <?php foreach ($data_desig as $t_data) {?>
                                                                                             <option
                                                                                                 value="<?php echo $t_data->Des_ID; ?>">
                                                                                                 <?php echo $t_data->Desig_Name; ?>
@@ -739,7 +732,7 @@
                                                                                         id="cmb_dep" name="cmb_dep">
                                                                                         <option value="">-- Select
                                                                                             Department --</option>
-                                                                                        <?php foreach ($data_dep as $t_data) { ?>
+                                                                                        <?php foreach ($data_dep as $t_data) {?>
                                                                                             <option
                                                                                                 value="<?php echo $t_data->Dep_ID; ?>">
                                                                                                 <?php echo $t_data->Dep_Name; ?>
@@ -758,7 +751,7 @@
                                                                                         name="cmb_branch">
                                                                                         <option value="">-- Select
                                                                                             Region --</option>
-                                                                                        <?php foreach ($data_branch as $t_data) { ?>
+                                                                                        <?php foreach ($data_branch as $t_data) {?>
                                                                                             <option
                                                                                                 value="<?php echo $t_data->B_id; ?>">
                                                                                                 <?php echo $t_data->B_name; ?>
@@ -776,7 +769,7 @@
                                                                                         id="cmb_comp" name="cmb_comp">
                                                                                         <option value="">-- Select
                                                                                             Company --</option>
-                                                                                        <?php foreach ($data_cmp as $t_data) { ?>
+                                                                                        <?php foreach ($data_cmp as $t_data) {?>
                                                                                             <option
                                                                                                 value="<?php echo $t_data->Cmp_ID; ?>">
                                                                                                 <?php echo $t_data->Company_Name; ?>
@@ -795,7 +788,7 @@
                                                                                         id="cmb_grop" name="cmb_grop">
                                                                                         <option value="">-- Select Group
                                                                                             --</option>
-                                                                                        <?php foreach ($data_group as $t_data) { ?>
+                                                                                        <?php foreach ($data_group as $t_data) {?>
                                                                                             <option
                                                                                                 value="<?php echo $t_data->id; ?>">
                                                                                                 <?php echo $t_data->super_gname; ?>
@@ -1052,343 +1045,101 @@
                                                                         </div> -->
 
                                                                         <!-- Form Actions -->
-                                                                        <div class="col-sm-6">
+                                                                        <div class="form-actions">
                                                                             <button type="submit"
                                                                                 class="btn btn-success"
                                                                                 id="generateBtn">
                                                                                 <i class="fas fa-file-pdf"></i>
-                                                                                VIEW PDF REPORT
+                                                                                Generate PDF Report
                                                                             </button>
 
                                                                             <button type="button" class="btn btn-danger"
                                                                                 id="cancel">
                                                                                 <i class="fas fa-eraser"></i>
-                                                                                CLEAR FORM
+                                                                                Clear Form
                                                                             </button>
                                                                         </div>
-
-                                                                        <!-- START: Column Selection Modal -->
-                                                                        <div class="modal fade" id="columnConfirmModal"
-                                                                            tabindex="-1" role="dialog"
-                                                                            aria-labelledby="columnConfirmLabel"
-                                                                            aria-hidden="true">
-                                                                            <div class="modal-dialog modal-lg"
-                                                                                role="document" style="width: 85%;">
-                                                                                <div class="modal-content">
-                                                                                    <div class="modal-header">
-                                                                                        <h5 class="modal-title">Select
-                                                                                            Columns for PDF Report</h5>
-                                                                                        <button type="button"
-                                                                                            class="close"
-                                                                                            data-dismiss="modal"
-                                                                                            aria-label="Close">
-                                                                                            <span>&times;</span>
-                                                                                        </button>
-                                                                                    </div>
-                                                                                    <div class="modal-body">
-                                                                                        <div class="form-section">
-                                                                                            <h3 class="section-title">
-                                                                                                <div
-                                                                                                    class="section-icon">
-                                                                                                    <i
-                                                                                                        class="fas fa-columns"></i>
-                                                                                                </div>
-                                                                                                Column Selection
-                                                                                            </h3>
-
-                                                                                            <div
-                                                                                                class="columns-section">
-                                                                                                <div
-                                                                                                    class="select-all-section">
-                                                                                                    <label
-                                                                                                        class="select-all-label">
-                                                                                                        <input
-                                                                                                            type="checkbox"
-                                                                                                            id="selectAllColumns"
-                                                                                                            class="checkbox-custom">
-                                                                                                        <span>Select All
-                                                                                                            Columns</span>
-                                                                                                    </label>
-                                                                                                </div>
-
-                                                                                                <div
-                                                                                                    class="columns-grid">
-                                                                                                    <div class="column-item checked"
-                                                                                                        data-value="EmpNo">
-                                                                                                        <label
-                                                                                                            class="column-label">
-                                                                                                            <input
-                                                                                                                type="checkbox"
-                                                                                                                name="columns[]"
-                                                                                                                value="EmpNo"
-                                                                                                                checked
-                                                                                                                class="checkbox-custom">
-                                                                                                            <span>Employee
-                                                                                                                Number</span>
-                                                                                                        </label>
-                                                                                                    </div>
-
-                                                                                                    <div class="column-item checked"
-                                                                                                        data-value="Emp_Full_Name">
-                                                                                                        <label
-                                                                                                            class="column-label">
-                                                                                                            <input
-                                                                                                                type="checkbox"
-                                                                                                                name="columns[]"
-                                                                                                                value="Emp_Full_Name"
-                                                                                                                checked
-                                                                                                                class="checkbox-custom">
-                                                                                                            <span>Employee
-                                                                                                                Name</span>
-                                                                                                        </label>
-                                                                                                    </div>
-
-                                                                                                    <div class="column-item"
-                                                                                                        data-value="FDate">
-                                                                                                        <label
-                                                                                                            class="column-label">
-                                                                                                            <input
-                                                                                                                type="checkbox"
-                                                                                                                name="columns[]"
-                                                                                                                value="FDate"
-                                                                                                                class="checkbox-custom">
-                                                                                                            <span>From
-                                                                                                                Date</span>
-                                                                                                        </label>
-                                                                                                    </div>
-
-                                                                                                    <div class="column-item"
-                                                                                                        data-value="FTime">
-                                                                                                        <label
-                                                                                                            class="column-label">
-                                                                                                            <input
-                                                                                                                type="checkbox"
-                                                                                                                name="columns[]"
-                                                                                                                value="FTime"
-                                                                                                                class="checkbox-custom">
-                                                                                                            <span>From
-                                                                                                                Time</span>
-                                                                                                        </label>
-                                                                                                    </div>
-
-                                                                                                    <div class="column-item"
-                                                                                                        data-value="TDate">
-                                                                                                        <label
-                                                                                                            class="column-label">
-                                                                                                            <input
-                                                                                                                type="checkbox"
-                                                                                                                name="columns[]"
-                                                                                                                value="TDate"
-                                                                                                                class="checkbox-custom">
-                                                                                                            <span>To
-                                                                                                                Date</span>
-                                                                                                        </label>
-                                                                                                    </div>
-
-                                                                                                    <div class="column-item"
-                                                                                                        data-value="TTime">
-                                                                                                        <label
-                                                                                                            class="column-label">
-                                                                                                            <input
-                                                                                                                type="checkbox"
-                                                                                                                name="columns[]"
-                                                                                                                value="TTime"
-                                                                                                                class="checkbox-custom">
-                                                                                                            <span>To
-                                                                                                                Time</span>
-                                                                                                        </label>
-                                                                                                    </div>
-
-                                                                                                    <div class="column-item"
-                                                                                                        data-value="InDate">
-                                                                                                        <label
-                                                                                                            class="column-label">
-                                                                                                            <input
-                                                                                                                type="checkbox"
-                                                                                                                name="columns[]"
-                                                                                                                value="InDate"
-                                                                                                                class="checkbox-custom">
-                                                                                                            <span>Check
-                                                                                                                In
-                                                                                                                Date</span>
-                                                                                                        </label>
-                                                                                                    </div>
-
-                                                                                                    <div class="column-item"
-                                                                                                        data-value="InTime">
-                                                                                                        <label
-                                                                                                            class="column-label">
-                                                                                                            <input
-                                                                                                                type="checkbox"
-                                                                                                                name="columns[]"
-                                                                                                                value="InTime"
-                                                                                                                class="checkbox-custom">
-                                                                                                            <span>Check
-                                                                                                                In
-                                                                                                                Time</span>
-                                                                                                        </label>
-                                                                                                    </div>
-
-                                                                                                    <div class="column-item"
-                                                                                                        data-value="OutDate">
-                                                                                                        <label
-                                                                                                            class="column-label">
-                                                                                                            <input
-                                                                                                                type="checkbox"
-                                                                                                                name="columns[]"
-                                                                                                                value="OutDate"
-                                                                                                                class="checkbox-custom">
-                                                                                                            <span>Check
-                                                                                                                Out
-                                                                                                                Date</span>
-                                                                                                        </label>
-                                                                                                    </div>
-
-                                                                                                    <div class="column-item"
-                                                                                                        data-value="OutTime">
-                                                                                                        <label
-                                                                                                            class="column-label">
-                                                                                                            <input
-                                                                                                                type="checkbox"
-                                                                                                                name="columns[]"
-                                                                                                                value="OutTime"
-                                                                                                                class="checkbox-custom">
-                                                                                                            <span>Check
-                                                                                                                Out
-                                                                                                                Time</span>
-                                                                                                        </label>
-                                                                                                    </div>
-
-                                                                                                    <div class="column-item"
-                                                                                                        data-value="BreackInTime1">
-                                                                                                        <label
-                                                                                                            class="column-label">
-                                                                                                            <input
-                                                                                                                type="checkbox"
-                                                                                                                name="columns[]"
-                                                                                                                value="BreackInTime1"
-                                                                                                                class="checkbox-custom">
-                                                                                                            <span>Break
-                                                                                                                In
-                                                                                                                Time</span>
-                                                                                                        </label>
-                                                                                                    </div>
-
-                                                                                                    <div class="column-item"
-                                                                                                        data-value="BreackOutTime1">
-                                                                                                        <label
-                                                                                                            class="column-label">
-                                                                                                            <input
-                                                                                                                type="checkbox"
-                                                                                                                name="columns[]"
-                                                                                                                value="BreackOutTime1"
-                                                                                                                class="checkbox-custom">
-                                                                                                            <span>Break
-                                                                                                                Out
-                                                                                                                Time</span>
-                                                                                                        </label>
-                                                                                                    </div>
-
-                                                                                                    <div class="column-item"
-                                                                                                        data-value="DayStatus">
-                                                                                                        <label
-                                                                                                            class="column-label">
-                                                                                                            <input
-                                                                                                                type="checkbox"
-                                                                                                                name="columns[]"
-                                                                                                                value="DayStatus"
-                                                                                                                class="checkbox-custom">
-                                                                                                            <span>Day
-                                                                                                                Status</span>
-                                                                                                        </label>
-                                                                                                    </div>
-
-                                                                                                    <div class="column-item"
-                                                                                                        data-value="AfterExH">
-                                                                                                        <label
-                                                                                                            class="column-label">
-                                                                                                            <input
-                                                                                                                type="checkbox"
-                                                                                                                name="columns[]"
-                                                                                                                value="AfterExH"
-                                                                                                                class="checkbox-custom">
-                                                                                                            <span>Overtime
-                                                                                                                Hours</span>
-                                                                                                        </label>
-                                                                                                    </div>
-
-                                                                                                    <div class="column-item"
-                                                                                                        data-value="LateM">
-                                                                                                        <label
-                                                                                                            class="column-label">
-                                                                                                            <input
-                                                                                                                type="checkbox"
-                                                                                                                name="columns[]"
-                                                                                                                value="LateM"
-                                                                                                                class="checkbox-custom">
-                                                                                                            <span>Late
-                                                                                                                Minutes</span>
-                                                                                                        </label>
-                                                                                                    </div>
-
-                                                                                                    <div class="column-item"
-                                                                                                        data-value="EarlyDepMin">
-                                                                                                        <label
-                                                                                                            class="column-label">
-                                                                                                            <input
-                                                                                                                type="checkbox"
-                                                                                                                name="columns[]"
-                                                                                                                value="EarlyDepMin"
-                                                                                                                class="checkbox-custom">
-                                                                                                            <span>Early
-                                                                                                                Departure</span>
-                                                                                                        </label>
-                                                                                                    </div>
-
-                                                                                                    <div class="column-item"
-                                                                                                        data-value="NumShift">
-                                                                                                        <label
-                                                                                                            class="column-label">
-                                                                                                            <input
-                                                                                                                type="checkbox"
-                                                                                                                name="columns[]"
-                                                                                                                value="NumShift"
-                                                                                                                class="checkbox-custom">
-                                                                                                            <span>Number
-                                                                                                                of
-                                                                                                                Shifts</span>
-                                                                                                        </label>
-                                                                                                    </div>
-                                                                                                </div>
-
-                                                                                                <div class="stats-bar">
-                                                                                                    <span
-                                                                                                        class="stats-text">
-                                                                                                        <span
-                                                                                                            class="selected-count">2</span>
-                                                                                                        of 17 columns
-                                                                                                        selected
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-
-                                                                                    </div>
-                                                                                    <div class="modal-footer">
-                                                                                        <button type="button"
-                                                                                            class="btn btn-secondary"
-                                                                                            data-dismiss="modal">Cancel</button>
-                                                                                        <button type="button"
-                                                                                            id="confirmSubmitBtn"
-                                                                                            class="btn btn-primary">Generate
-                                                                                            PDF</button>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <!-- END: Modal -->
                                                                     </form>
-
+                                                                    <!-- START: Column Selection Modal -->
+<div class="modal fade" id="columnConfirmModal" tabindex="-1" role="dialog" aria-labelledby="columnConfirmLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Select Columns for PDF Report</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="select-all-section mb-3">
+                    <label>
+                        <input type="checkbox" id="selectAllColumns" class="checkbox-custom">
+                        <strong>Select All Columns</strong>
+                    </label>
+                </div>
+                <div class="row" id="columnCheckboxes">
+                    <!-- Each column is a Bootstrap 4 col-md-4 item -->
+                    <div class="col-md-4">
+                        <label><input type="checkbox" name="columns[]" value="EmpNo" checked> Employee Number</label>
+                    </div>
+                    <div class="col-md-4">
+                        <label><input type="checkbox" name="columns[]" value="Emp_Full_Name" checked> Employee Name</label>
+                    </div>
+                    <div class="col-md-4">
+                        <label><input type="checkbox" name="columns[]" value="FDate"> From Date</label>
+                    </div>
+                    <div class="col-md-4">
+                        <label><input type="checkbox" name="columns[]" value="FTime"> From Time</label>
+                    </div>
+                    <div class="col-md-4">
+                        <label><input type="checkbox" name="columns[]" value="TDate"> To Date</label>
+                    </div>
+                    <div class="col-md-4">
+                        <label><input type="checkbox" name="columns[]" value="TTime"> To Time</label>
+                    </div>
+                    <div class="col-md-4">
+                        <label><input type="checkbox" name="columns[]" value="InDate"> Check In Date</label>
+                    </div>
+                    <div class="col-md-4">
+                        <label><input type="checkbox" name="columns[]" value="InTime"> Check In Time</label>
+                    </div>
+                    <div class="col-md-4">
+                        <label><input type="checkbox" name="columns[]" value="OutDate"> Check Out Date</label>
+                    </div>
+                    <div class="col-md-4">
+                        <label><input type="checkbox" name="columns[]" value="OutTime"> Check Out Time</label>
+                    </div>
+                    <div class="col-md-4">
+                        <label><input type="checkbox" name="columns[]" value="BreackInTime1"> Break In Time</label>
+                    </div>
+                    <div class="col-md-4">
+                        <label><input type="checkbox" name="columns[]" value="BreackOutTime1"> Break Out Time</label>
+                    </div>
+                    <div class="col-md-4">
+                        <label><input type="checkbox" name="columns[]" value="DayStatus"> Day Status</label>
+                    </div>
+                    <div class="col-md-4">
+                        <label><input type="checkbox" name="columns[]" value="AfterExH"> Overtime Hours</label>
+                    </div>
+                    <div class="col-md-4">
+                        <label><input type="checkbox" name="columns[]" value="LateM"> Late Minutes</label>
+                    </div>
+                    <div class="col-md-4">
+                        <label><input type="checkbox" name="columns[]" value="EarlyDepMin"> Early Departure</label>
+                    </div>
+                    <div class="col-md-4">
+                        <label><input type="checkbox" name="columns[]" value="NumShift"> Number of Shifts</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" id="confirmSubmitBtn" class="btn btn-primary">Generate PDF</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: Modal -->
                                                                 </div>
                                                             </div>
 
@@ -1658,119 +1409,119 @@
         }
     </script> -->
     <script>
-        // Get DOM elements
-        const selectAllCheckbox = document.getElementById('selectAllColumns');
-        const columnCheckboxes = document.querySelectorAll('input[name="columns[]"]');
-        const columnItems = document.querySelectorAll('.column-item');
-        const selectedCountElement = document.querySelector('.selected-count');
+    // Get DOM elements
+    const selectAllCheckbox = document.getElementById('selectAllColumns');
+    const columnCheckboxes = document.querySelectorAll('input[name="columns[]"]');
+    const columnItems = document.querySelectorAll('.column-item');
+    const selectedCountElement = document.querySelector('.selected-count');
 
-        // Update selected count
-        function updateSelectedCount() {
-            const checkedBoxes = document.querySelectorAll('input[name="columns[]"]:checked');
-            selectedCountElement.textContent = checkedBoxes.length;
+    // Update selected count
+    function updateSelectedCount() {
+        const checkedBoxes = document.querySelectorAll('input[name="columns[]"]:checked');
+        selectedCountElement.textContent = checkedBoxes.length;
+    }
+
+    // Update visual state of column items
+    function updateColumnItemState(item, checkbox) {
+        if (checkbox.checked) {
+            item.classList.add('checked');
+            item.classList.add('just-checked');
+            setTimeout(() => item.classList.remove('just-checked'), 300);
+        } else {
+            item.classList.remove('checked');
         }
+    }
 
-        // Update visual state of column items
-        function updateColumnItemState(item, checkbox) {
-            if (checkbox.checked) {
-                item.classList.add('checked');
-                item.classList.add('just-checked');
-                setTimeout(() => item.classList.remove('just-checked'), 300);
-            } else {
-                item.classList.remove('checked');
-            }
-        }
+    // Handle select all functionality
+    selectAllCheckbox.addEventListener('change', function () {
+        const isChecked = this.checked;
 
-        // Handle select all functionality
-        selectAllCheckbox.addEventListener('change', function () {
-            const isChecked = this.checked;
-
-            columnCheckboxes.forEach((checkbox, index) => {
-                // Skip EmpNo and Emp_Full_Name
-                if (checkbox.value === 'EmpNo' || checkbox.value === 'Emp_Full_Name') return;
-
-                checkbox.checked = isChecked;
-                updateColumnItemState(columnItems[index], checkbox);
-            });
-
-            updateSelectedCount();
-        });
-
-        // Handle individual checkbox changes
         columnCheckboxes.forEach((checkbox, index) => {
-            checkbox.addEventListener('change', function () {
-                updateColumnItemState(columnItems[index], this);
+            // Skip EmpNo and Emp_Full_Name
+            if (checkbox.value === 'EmpNo' || checkbox.value === 'Emp_Full_Name') return;
 
-                const checkedBoxes = document.querySelectorAll('input[name="columns[]"]:checked');
-                selectAllCheckbox.checked = checkedBoxes.length === columnCheckboxes.length;
-                selectAllCheckbox.indeterminate = checkedBoxes.length > 0 && checkedBoxes.length < columnCheckboxes.length;
-
-                updateSelectedCount();
-            });
+            checkbox.checked = isChecked;
+            updateColumnItemState(columnItems[index], checkbox);
         });
 
-        // Handle clicking on column item (not just checkbox)
-        columnItems.forEach((item, index) => {
-            item.addEventListener('click', function (e) {
-                if (e.target.type === 'checkbox' || e.target.tagName === 'LABEL') return;
+        updateSelectedCount();
+    });
 
-                const checkbox = this.querySelector('input[type="checkbox"]');
-                checkbox.checked = !checkbox.checked;
-                checkbox.dispatchEvent(new Event('change'));
-            });
-        });
-
-        // Initial setup
-        function initializeState() {
-            columnCheckboxes.forEach((checkbox, index) => {
-                updateColumnItemState(columnItems[index], checkbox);
-            });
+    // Handle individual checkbox changes
+    columnCheckboxes.forEach((checkbox, index) => {
+        checkbox.addEventListener('change', function () {
+            updateColumnItemState(columnItems[index], this);
 
             const checkedBoxes = document.querySelectorAll('input[name="columns[]"]:checked');
+            selectAllCheckbox.checked = checkedBoxes.length === columnCheckboxes.length;
             selectAllCheckbox.indeterminate = checkedBoxes.length > 0 && checkedBoxes.length < columnCheckboxes.length;
 
             updateSelectedCount();
-        }
-
-        // Initialize on page load
-        initializeState();
-    </script>
-
-    <!-- START: Script -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const form = document.querySelector('form');
-            const generateBtn = document.getElementById('generateBtn');
-            const confirmSubmitBtn = document.getElementById('confirmSubmitBtn');
-
-            let formToSubmit = form;
-
-            // When main Generate button is clicked
-            generateBtn.addEventListener('click', function (e) {
-                e.preventDefault();
-                $('#columnConfirmModal').modal('show');
-            });
-
-            // When confirmed inside modal
-            confirmSubmitBtn.addEventListener('click', function () {
-                $('#columnConfirmModal').modal('hide');
-                if (formToSubmit) {
-                    formToSubmit.submit();
-                }
-            });
-
-            // Select All Columns functionality
-            document.getElementById('selectAllColumns').addEventListener('change', function () {
-                const allCheckboxes = document.querySelectorAll('#columnCheckboxes input[type="checkbox"]');
-                allCheckboxes.forEach(function (checkbox) {
-                    if (checkbox.value !== 'EmpNo' && checkbox.value !== 'Emp_Full_Name') {
-                        checkbox.checked = document.getElementById('selectAllColumns').checked;
-                    }
-                });
-            });
         });
-    </script>
-    <!-- END: Script -->
+    });
+
+    // Handle clicking on column item (not just checkbox)
+    columnItems.forEach((item, index) => {
+        item.addEventListener('click', function (e) {
+            if (e.target.type === 'checkbox' || e.target.tagName === 'LABEL') return;
+
+            const checkbox = this.querySelector('input[type="checkbox"]');
+            checkbox.checked = !checkbox.checked;
+            checkbox.dispatchEvent(new Event('change'));
+        });
+    });
+
+    // Initial setup
+    function initializeState() {
+        columnCheckboxes.forEach((checkbox, index) => {
+            updateColumnItemState(columnItems[index], checkbox);
+        });
+
+        const checkedBoxes = document.querySelectorAll('input[name="columns[]"]:checked');
+        selectAllCheckbox.indeterminate = checkedBoxes.length > 0 && checkedBoxes.length < columnCheckboxes.length;
+
+        updateSelectedCount();
+    }
+
+    // Initialize on page load
+    initializeState();
+</script>
+
+<!-- START: Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('form');
+    const generateBtn = document.getElementById('generateBtn');
+    const confirmSubmitBtn = document.getElementById('confirmSubmitBtn');
+
+    let formToSubmit = form;
+
+    // When main Generate button is clicked
+    generateBtn.addEventListener('click', function (e) {
+        e.preventDefault();
+        $('#columnConfirmModal').modal('show');
+    });
+
+    // When confirmed inside modal
+    confirmSubmitBtn.addEventListener('click', function () {
+        $('#columnConfirmModal').modal('hide');
+        if (formToSubmit) {
+            formToSubmit.submit();
+        }
+    });
+
+    // Select All Columns functionality
+    document.getElementById('selectAllColumns').addEventListener('change', function () {
+        const allCheckboxes = document.querySelectorAll('#columnCheckboxes input[type="checkbox"]');
+        allCheckboxes.forEach(function (checkbox) {
+            if (checkbox.value !== 'EmpNo' && checkbox.value !== 'Emp_Full_Name') {
+                checkbox.checked = document.getElementById('selectAllColumns').checked;
+            }
+        });
+    });
+});
+</script>
+<!-- END: Script -->
 </body>
 
 
