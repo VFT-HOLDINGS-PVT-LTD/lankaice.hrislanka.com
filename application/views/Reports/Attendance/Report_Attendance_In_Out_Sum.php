@@ -189,7 +189,7 @@
         .form-input,
         .form-select {
             width: 100%;
-            padding: 12px 16px;
+            padding: 11px 15px;
             border: 2px solid var(--border-color);
             border-radius: var(--border-radius-md);
             font-size: 14px;
@@ -677,18 +677,20 @@
 
                                                         <div class="panel-body">
                                                             <div class="row">
- <div class="form-group col-sm-12">
+                                                                <div class="form-group col-sm-12">
                                                                     <div class="col-sm-6">
-                                                                        <img class="imagecss1" src="<?php echo base_url(); ?>assets/images/attendance_inout.png" style="margin-left: 0%; margin-bottom: 10px;">
+                                                                        <img class="imagecss1"
+                                                                            src="<?php echo base_url(); ?>assets/images/attendance_inout.png"
+                                                                            style="margin-left: 0%; margin-bottom: 10px;">
                                                                     </div>
 
                                                                 </div>
                                                                 <!-- Form Body -->
                                                                 <div class="form-group col-md-12">
-                                                                    <form
+                                                                    <form name="frm_employee"
                                                                         action="<?php echo base_url('Reports/Attendance/Report_Attendance_ATT_Sum/Attendance_Report_By_Cat') ?>"
                                                                         method="POST" target="_blank">
-                                                                        
+
 
                                                                         <!-- Employee Filters Section -->
                                                                         <div class="form-section">
@@ -812,7 +814,8 @@
                                                                                             class="required">*</span></label>
                                                                                     <div class="date-input-wrapper">
                                                                                         <input type="text"
-                                                                                            class="form-input" required
+                                                                                            class="form-input"
+                                                                                            required="required"
                                                                                             id="dpd1"
                                                                                             name="txt_from_date">
                                                                                     </div>
@@ -824,7 +827,8 @@
                                                                                             class="required">*</span></label>
                                                                                     <div class="date-input-wrapper">
                                                                                         <input type="text"
-                                                                                            class="form-input" required
+                                                                                            class="form-input"
+                                                                                            required="required"
                                                                                             id="dpd2"
                                                                                             name="txt_to_date">
                                                                                     </div>
@@ -1735,6 +1739,8 @@
         // Initialize on page load
         initializeState();
     </script>
+    <!-- SweetAlert2 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- START: Script -->
     <script>
@@ -1748,6 +1754,21 @@
             // When main Generate button is clicked
             generateBtn.addEventListener('click', function (e) {
                 e.preventDefault();
+
+                const d1 = document.getElementById('dpd1').value;
+                const d2 = document.getElementById('dpd2').value;
+
+                if (!d1 || !d2) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Missing Date',
+                        text: 'Please select both From Date and To Date before generating the report.',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
+
                 $('#columnConfirmModal').modal('show');
             });
 
@@ -1769,8 +1790,23 @@
                 });
             });
         });
+
     </script>
     <!-- END: Script -->
+
+    <script>
+        $("#frm_employee").validate({
+            rules: {
+                dpd1: "required",
+                dpd2: "required",
+            },
+            messages: {
+                cmb_emp_title: "Please select a title",
+                cmb_gender: "Please select gender",
+                img_employee: "Please upload an image"
+            }
+        });
+    </script>
 </body>
 
 
