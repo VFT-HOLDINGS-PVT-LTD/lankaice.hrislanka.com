@@ -430,6 +430,8 @@ public function Export_Excel()
     $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
     $writer->save('php://output');
     exit;
+
+    // redirect('Reports/Attendance/Report_Attendance_In_Out_Sum'); // Redirect after download
 }
 
 

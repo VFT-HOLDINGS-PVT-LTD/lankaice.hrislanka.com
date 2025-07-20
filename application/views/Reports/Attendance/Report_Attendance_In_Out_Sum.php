@@ -1792,72 +1792,44 @@
 
     <!-- excel - start -->
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const form = document.querySelector('form');
-            const generateBtn = document.getElementById('generateBtn');
-            const exportExcelBtn = document.getElementById('exportExcelBtn');
-            const confirmSubmitBtn = document.getElementById('confirmSubmitBtn');
+        const exportExcelBtn = document.getElementById('exportExcelBtn');
+        const form = document.querySelector('form');
 
-            // PDF Generate - Open modal
-            generateBtn.addEventListener('click', function (e) {
-                e.preventDefault();
+        exportExcelBtn.addEventListener('click', function (e) {
+            e.preventDefault();
 
-                const d1 = document.getElementById('dpd1').value;
-                const d2 = document.getElementById('dpd2').value;
+            const d1 = document.getElementById('dpd1').value;
+            const d2 = document.getElementById('dpd2').value;
 
-                if (!d1 || !d2) {
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Missing Date',
-                        text: 'Please select both From Date and To Date before generating the report.',
-                        confirmButtonColor: '#3085d6',
-                        confirmButtonText: 'OK'
-                    });
-                    return;
-                }
+            if (!d1 || !d2) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Missing Date',
+                    text: 'Please select both From Date and To Date before exporting.',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
 
-                $('#columnConfirmModal').modal('show');
-            });
+            form.setAttribute('action', "<?= base_url('Reports/Attendance/Report_Attendance_ATT_Sum/Export_Excel') ?>");
 
-            // PDF Confirm Button inside Modal
-            // confirmSubmitBtn.addEventListener('click', function () {
-            //     $('#columnConfirmModal').modal('hide');
-            //     form.setAttribute('action', ''); // Keep default PDF action
-            //     form.submit();
-            // });
+            // Create invisible iframe to trigger download
+            let iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.name = 'hiddenDownloader';
+            document.body.appendChild(iframe);
 
-            // Excel Export - Submit directly without modal
-            exportExcelBtn.addEventListener('click', function (e) {
-                e.preventDefault();
+            form.target = 'hiddenDownloader';
+            form.submit();
 
-                const d1 = document.getElementById('dpd1').value;
-                const d2 = document.getElementById('dpd2').value;
-
-                if (!d1 || !d2) {
-                    Swal.fire({
-                        icon: 'warning',
-                        title: 'Missing Date',
-                        text: 'Please select both From Date and To Date before exporting.',
-                        confirmButtonColor: '#3085d6',
-                        confirmButtonText: 'OK'
-                    });
-                    return;
-                }
-
-                form.setAttribute('action', "<?= base_url('Reports/Attendance/Report_Attendance_ATT_Sum/Export_Excel') ?>");
-                form.submit();
-            });
-
-            // Select All Columns checkbox
-            document.getElementById('selectAllColumns').addEventListener('change', function () {
-                const allCheckboxes = document.querySelectorAll('#columnCheckboxes input[type="checkbox"]');
-                allCheckboxes.forEach(function (checkbox) {
-                    if (checkbox.value !== 'EmpNo' && checkbox.value !== 'Emp_Full_Name') {
-                        checkbox.checked = this.checked;
-                    }
-                }, this);
-            });
+            // Redirect immediately (or after very short delay)
+            setTimeout(() => {
+                window.location.href = "<?= base_url('Reports/Attendance/Report_Attendance_ATT_Sum') ?>";
+            }, 100); // 100ms delay to let download start
         });
+
+
     </script>
     <!-- excel - end -->
 
