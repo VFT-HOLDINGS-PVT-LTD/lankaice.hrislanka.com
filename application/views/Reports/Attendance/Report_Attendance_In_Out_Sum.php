@@ -704,7 +704,7 @@
                                                                                         class="form-input"
                                                                                         name="txt_emp_name"
                                                                                         id="txt_emp_name"
-                                                                                        placeholder="Ex: Ashan">
+                                                                                        placeholder="Ex: Nimal Perera">
                                                                                 </div>
 
                                                                                 <div class="form-group">
