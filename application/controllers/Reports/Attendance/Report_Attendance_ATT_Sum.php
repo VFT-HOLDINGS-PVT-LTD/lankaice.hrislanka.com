@@ -54,127 +54,273 @@ class Report_Attendance_ATT_Sum extends CI_Controller {
         $this->load->view('Reports/Master/rpt_Departments', $Data);
     }
 
-    public function Attendance_Report_By_Cat() {
+//     public function Attendance_Report_By_Cat() {
 
 
-        $data['data_cmp'] = $this->Db_model->getData('Cmp_ID,Company_Name', 'tbl_companyprofile');
+//         $data['data_cmp'] = $this->Db_model->getData('Cmp_ID,Company_Name', 'tbl_companyprofile');
 
-        $emp = $this->input->post("txt_emp");
-        $emp_name = $this->input->post("txt_emp_name");
-        $desig = $this->input->post("cmb_desig");
-        $dept = $this->input->post("cmb_dep");
-        $grop = $this->input->post("cmb_grop");
-        $from_date = $this->input->post("txt_from_date");
-        $to_date = $this->input->post("txt_to_date");
-        $branch = $this->input->post("cmb_branch");
-
-
-        $data['f_date'] = $from_date;
-        $data['t_date'] = $to_date;
+//         $emp = $this->input->post("txt_emp");
+//         $emp_name = $this->input->post("txt_emp_name");
+//         $desig = $this->input->post("cmb_desig");
+//         $dept = $this->input->post("cmb_dep");
+//         $grop = $this->input->post("cmb_grop");
+//         $from_date = $this->input->post("txt_from_date");
+//         $to_date = $this->input->post("txt_to_date");
+//         $branch = $this->input->post("cmb_branch");
 
 
-        // Filter Data by categories
-        $filter = '';
-
-        if (($this->input->post("txt_from_date")) && ($this->input->post("txt_to_date"))) {
-            if ($filter == '') {
-                $filter = " where  ir.FDate between '$from_date' and '$to_date'";
-            } else {
-                $filter .= " AND  ir.FDate between '$from_date' and '$to_date'";
-            }
-        }
-        if (($this->input->post("txt_emp"))) {
-            if ($filter == null) {
-                $filter = " where ir.EmpNo =$emp";
-            } else {
-                $filter .= " AND ir.EmpNo =$emp";
-            }
-        }
-
-        if (($this->input->post("txt_emp_name"))) {
-            if ($filter == null) {
-                $filter = " where Emp.Emp_Full_Name ='$emp_name'";
-            } else {
-                $filter .= " AND Emp.Emp_Full_Name ='$emp_name'";
-            }
-        }
-        if (($this->input->post("cmb_grop"))) {
-            if ($filter == null) {
-                $filter = " where Emp.SupGrp_ID =$grop";
-            } else {
-                $filter .= " AND Emp.SupGrp_ID =$grop";
-            }
-        }
-        if (($this->input->post("cmb_desig"))) {
-            if ($filter == null) {
-                $filter = " where dsg.Des_ID  ='$desig'";
-            } else {
-                $filter .= " AND dsg.Des_ID  ='$desig'";
-            }
-        }
-        if (($this->input->post("cmb_dep"))) {
-            if ($filter == null) {
-                $filter = " where dep.Dep_id  ='$dept'";
-            } else {
-                $filter .= " AND dep.Dep_id  ='$dept'";
-            }
-        }
-
-        if (($this->input->post("cmb_branch"))) {
-            if ($filter == null) {
-                $filter = " where br.B_id  ='$branch'";
-            } else {
-                $filter .= " AND br.B_id  ='$branch'";
-            }
-        }
+//         $data['f_date'] = $from_date;
+//         $data['t_date'] = $to_date;
 
 
+//         // Filter Data by categories
+//         $filter = '';
 
-        $data['data_set2'] = $this->Db_model->getfilteredData("SELECT 
-                                                                    ir.EmpNo,
-                                                                    Emp.Emp_Full_Name,
-                                                                    ir.FDate,
-                                                                    ir.TDate,
-                                                                    ir.InDate,
-                                                                    ir.OutDate,
-                                                                    ir.ShiftDay,
-                                                                    ir.ShType,
-                                                                    ir.FTime,
-                                                                    ir.TTime,
-                                                                    ir.InTime,
-                                                                    ir.OutTime,
-                                                                    ir.DayStatus,
-                                                                    ir.ApprovedExH,
-                                                                    ir.LateM,
-                                                                    ir.Lv_T_ID,
-                                                                    ir.EarlyDepMin,
-                                                                    br.B_name,
-                                                                    ir.BreackOutTime1,
-                                                                    ir.BreackInTime1,
-                                                                    ir.AfterExH,
-                                                                    ir.NumShift
+//         if (($this->input->post("txt_from_date")) && ($this->input->post("txt_to_date"))) {
+//             if ($filter == '') {
+//                 $filter = " where  ir.FDate between '$from_date' and '$to_date'";
+//             } else {
+//                 $filter .= " AND  ir.FDate between '$from_date' and '$to_date'";
+//             }
+//         }
+//         if (($this->input->post("txt_emp"))) {
+//             if ($filter == null) {
+//                 $filter = " where ir.EmpNo =$emp";
+//             } else {
+//                 $filter .= " AND ir.EmpNo =$emp";
+//             }
+//         }
+
+//         if (($this->input->post("txt_emp_name"))) {
+//             if ($filter == null) {
+//                 $filter = " where Emp.Emp_Full_Name ='$emp_name'";
+//             } else {
+//                 $filter .= " AND Emp.Emp_Full_Name ='$emp_name'";
+//             }
+//         }
+//         if (($this->input->post("cmb_grop"))) {
+//             if ($filter == null) {
+//                 $filter = " where Emp.SupGrp_ID =$grop";
+//             } else {
+//                 $filter .= " AND Emp.SupGrp_ID =$grop";
+//             }
+//         }
+//         if (($this->input->post("cmb_desig"))) {
+//             if ($filter == null) {
+//                 $filter = " where dsg.Des_ID  ='$desig'";
+//             } else {
+//                 $filter .= " AND dsg.Des_ID  ='$desig'";
+//             }
+//         }
+//         if (($this->input->post("cmb_dep"))) {
+//             if ($filter == null) {
+//                 $filter = " where dep.Dep_id  ='$dept'";
+//             } else {
+//                 $filter .= " AND dep.Dep_id  ='$dept'";
+//             }
+//         }
+
+//         if (($this->input->post("cmb_branch"))) {
+//             if ($filter == null) {
+//                 $filter = " where br.B_id  ='$branch'";
+//             } else {
+//                 $filter .= " AND br.B_id  ='$branch'";
+//             }
+//         }
+
+
+
+//         $data['data_set2'] = $this->Db_model->getfilteredData("SELECT 
+//                                                                     ir.EmpNo,
+//                                                                     Emp.Emp_Full_Name,
+//                                                                     ir.FDate,
+//                                                                     ir.TDate,
+//                                                                     ir.InDate,
+//                                                                     ir.OutDate,
+//                                                                     ir.ShiftDay,
+//                                                                     ir.ShType,
+//                                                                     ir.FTime,
+//                                                                     ir.TTime,
+//                                                                     ir.InTime,
+//                                                                     ir.OutTime,
+//                                                                     ir.DayStatus,
+//                                                                     ir.ApprovedExH,
+//                                                                     ir.LateM,
+//                                                                     ir.Lv_T_ID,
+//                                                                     ir.EarlyDepMin,
+//                                                                     br.B_name,
+//                                                                     ir.BreackOutTime1,
+//                                                                     ir.BreackInTime1,
+//                                                                     ir.AfterExH,
+//                                                                     ir.NumShift
                                                                    
-                                                                FROM
-                                                                    tbl_individual_roster ir
-                                                                        LEFT JOIN
-                                                                    tbl_empmaster Emp ON Emp.EmpNo = ir.EmpNo
-                                                                        LEFT JOIN
-                                                                    tbl_designations dsg ON dsg.Des_ID = Emp.Des_ID
-                                                                        LEFT JOIN
-                                                                    tbl_departments dep ON dep.Dep_id = Emp.Dep_id
-                                                                    inner join
-                                                                    tbl_branches br on Emp.B_id = br.B_id 
+//                                                                 FROM
+//                                                                     tbl_individual_roster ir
+//                                                                         LEFT JOIN
+//                                                                     tbl_empmaster Emp ON Emp.EmpNo = ir.EmpNo
+//                                                                         LEFT JOIN
+//                                                                     tbl_designations dsg ON dsg.Des_ID = Emp.Des_ID
+//                                                                         LEFT JOIN
+//                                                                     tbl_departments dep ON dep.Dep_id = Emp.Dep_id
+//                                                                     inner join
+//                                                                     tbl_branches br on Emp.B_id = br.B_id 
                                                                    
 
         
-                                                                    {$filter} AND STATUS='1' AND Emp.EmpNo != '00009000' order by ir.EmpNo,ir.FDate,ir.InTime;");
+//                                                                     {$filter} AND STATUS='1' AND Emp.EmpNo != '00009000' order by ir.EmpNo,ir.FDate,ir.InTime;");
 
-//        var_dump($data);die;
+// //        var_dump($data);die;
 
-        $this->load->view('Reports/Attendance/rpt_In_Out_Sum', $data);
+//         $this->load->view('Reports/Attendance/rpt_In_Out_Sum', $data);
+//     }
+
+
+// public function Attendance_Report_By_Cat()
+// {
+//     $selected_columns = $this->input->post('columns');
+//     $f_date = $this->input->post('f_date');
+//     $t_date = $this->input->post('t_date');
+
+//     $filter = "WHERE ir.FDate BETWEEN '$f_date' AND '$t_date'"; // Add more filters if needed
+
+//     $query = "SELECT 
+//                 ir.EmpNo,
+//                 Emp.Emp_Full_Name,
+//                 ir.FDate,
+//                 ir.TDate,
+//                 ir.InDate,
+//                 ir.OutDate,
+//                 ir.ShiftDay,
+//                 ir.ShType,
+//                 ir.FTime,
+//                 ir.TTime,
+//                 ir.InTime,
+//                 ir.OutTime,
+//                 ir.DayStatus,
+//                 ir.ApprovedExH,
+//                 ir.LateM,
+//                 ir.Lv_T_ID,
+//                 ir.EarlyDepMin,
+//                 br.B_name,
+//                 ir.BreackOutTime1,
+//                 ir.BreackInTime1,
+//                 ir.AfterExH,
+//                 ir.NumShift
+//             FROM tbl_individual_roster ir
+//             LEFT JOIN tbl_empmaster Emp ON Emp.EmpNo = ir.EmpNo
+//             LEFT JOIN tbl_designations dsg ON dsg.Des_ID = Emp.Des_ID
+//             LEFT JOIN tbl_departments dep ON dep.Dep_id = Emp.Dep_id
+//             INNER JOIN tbl_branches br ON Emp.B_id = br.B_id
+//             $filter AND Emp.Status = '1' AND Emp.EmpNo != '00009000'
+//             ORDER BY ir.EmpNo, ir.FDate, ir.InTime";
+
+//     $data['data_set2'] = $this->Db_model->getfilteredData($query);
+//     $data['data_cmp'] = $this->Db_model->getfilteredData("SELECT Company_Name FROM tbl_companyprofile"); // For PDF title
+//     $data['selected_columns'] = $selected_columns;
+//     $data['f_date'] = $f_date;
+//     $data['t_date'] = $t_date;
+
+//     // print_r($data); // For debugging purposes
+//     // $this->load->view('Reports/Attendance/rpt_In_Out_Sum', $data);
+//     $data['selected_cols'] = $this->input->post('selected_cols') ?? []; // or however you get the selected columns
+// $this->load->view('Reports/Attendance/rpt_In_Out_Sum', $data);
+
+// }
+
+public function Attendance_Report_By_Cat()
+{
+    $data['data_cmp'] = $this->Db_model->getData('Cmp_ID,Company_Name', 'tbl_companyprofile');
+
+    // Capture input
+    $selected_columns = $this->input->post('columns') ?? []; // array of selected column names
+    $emp = $this->input->post("txt_emp");
+    $emp_name = $this->input->post("txt_emp_name");
+    $desig = $this->input->post("cmb_desig");
+    $dept = $this->input->post("cmb_dep");
+    $grop = $this->input->post("cmb_grop");
+    $from_date = $this->input->post("txt_from_date");
+    $to_date = $this->input->post("txt_to_date");
+    $branch = $this->input->post("cmb_branch");
+
+    $data['f_date'] = $from_date;
+    $data['t_date'] = $to_date;
+    $data['selected_columns'] = $selected_columns;
+
+    // Build filter
+    $filter = '';
+    if (!empty($from_date) && !empty($to_date)) {
+        $filter .= " WHERE ir.FDate BETWEEN '$from_date' AND '$to_date'";
     }
 
-    function get_auto_emp_name() {
+    if (!empty($emp)) {
+        $filter .= empty($filter) ? " WHERE ir.EmpNo = '$emp'" : " AND ir.EmpNo = '$emp'";
+    }
+
+    if (!empty($emp_name)) {
+        $filter .= empty($filter) ? " WHERE Emp.Emp_Full_Name = '$emp_name'" : " AND Emp.Emp_Full_Name = '$emp_name'";
+    }
+
+    if (!empty($grop)) {
+        $filter .= empty($filter) ? " WHERE Emp.SupGrp_ID = '$grop'" : " AND Emp.SupGrp_ID = '$grop'";
+    }
+
+    if (!empty($desig)) {
+        $filter .= empty($filter) ? " WHERE dsg.Des_ID = '$desig'" : " AND dsg.Des_ID = '$desig'";
+    }
+
+    if (!empty($dept)) {
+        $filter .= empty($filter) ? " WHERE dep.Dep_id = '$dept'" : " AND dep.Dep_id = '$dept'";
+    }
+
+    if (!empty($branch)) {
+        $filter .= empty($filter) ? " WHERE br.B_id = '$branch'" : " AND br.B_id = '$branch'";
+    }
+
+    // Always include these
+    $filter .= (empty($filter) ? " WHERE " : " AND ") . "Emp.Status = '1' AND Emp.EmpNo != '00009000'";
+
+    // Full query with all columns (selected_columns will control display)
+    $query = "SELECT 
+                ir.EmpNo,
+                Emp.Emp_Full_Name,
+                ir.FDate,
+                ir.TDate,
+                ir.InDate,
+                ir.OutDate,
+                ir.ShiftDay,
+                ir.ShType,
+                ir.FTime,
+                ir.TTime,
+                ir.InTime,
+                ir.OutTime,
+                ir.DayStatus,
+                ir.ApprovedExH,
+                ir.LateM,
+                ir.Lv_T_ID,
+                ir.EarlyDepMin,
+                br.B_name,
+                ir.BreackOutTime1,
+                ir.BreackInTime1,
+                ir.AfterExH,
+                ir.NumShift
+            FROM tbl_individual_roster ir
+            LEFT JOIN tbl_empmaster Emp ON Emp.EmpNo = ir.EmpNo
+            LEFT JOIN tbl_designations dsg ON dsg.Des_ID = Emp.Des_ID
+            LEFT JOIN tbl_departments dep ON dep.Dep_id = Emp.Dep_id
+            INNER JOIN tbl_branches br ON Emp.B_id = br.B_id
+            $filter
+            ORDER BY ir.EmpNo, ir.FDate, ir.InTime";
+
+    // Fetch data
+    $data['data_set2'] = $this->Db_model->getfilteredData($query);
+
+    // Load view
+    $this->load->view('Reports/Attendance/rpt_In_Out_Sum', $data);
+}
+
+
+
+function get_auto_emp_name() {
         if (isset($_GET['term'])) {
             $q = strtolower($_GET['term']);
             $this->Db_model->get_auto_emp_name($q);

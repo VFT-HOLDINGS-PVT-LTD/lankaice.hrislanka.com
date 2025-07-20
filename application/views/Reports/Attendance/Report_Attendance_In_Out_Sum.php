@@ -57,9 +57,10 @@
                                                         </div>
 
                                                         <div class="panel-body">
-                                                            <div style="font-size: 15px; font-weight: bold;" class="bg-bright">REPORT BY CATEGORIES</div>
+                                                            <div style="font-size: 15px; font-weight: bold;"
+                                                                class="bg-bright">REPORT BY CATEGORIES</div>
 
-                                                            <form action="<?php echo base_url(); ?>Reports/Attendance/Report_Attendance_ATT_Sum/Attendance_Report_By_Cat" class="form-horizontal" id="frm_in_out_rpt" name="frm_in_out_rpt" method="POST">
+                                                            <!-- <form action="<?php echo base_url(); ?>Reports/Attendance/Report_Attendance_ATT_Sum/Attendance_Report_By_Cat" class="form-horizontal" id="frm_in_out_rpt" name="frm_in_out_rpt" method="POST">
 
                                                                 <div class="form-group col-sm-12">
                                                                     <div class="col-sm-6">
@@ -209,7 +210,7 @@
 
                                                                             <input type="text" class="form-control" required="" id="dpd2" name="txt_to_date" placeholder="Select Date">
 
-                                                                            <!-- <?php echo json_encode($emp_master) ?> -->
+
                                                                         </div>
 
                                                                     </div>
@@ -217,15 +218,242 @@
 
 
                                                                 <div class="col-sm-6">
-                                                                    <!--<input type="submit" onclick="get();" id="search"-->
-                                                                    <!--    name="search" formtarget="_new"-->
-                                                                    <!--    class="btn-green btn fa fa-check"-->
-                                                                    <!--    value="&nbsp;&nbsp;VIEW&nbsp; EXCEL REPORT">-->
                                                                     <input type="submit" id="search" name="search" formtarget="_new" class="btn-green btn fa fa-check" value="&nbsp;&nbsp;VIEW&nbsp;PDF REPORT">
 
                                                                     <input type="button" id="cancel" name="cancel" class="btn-danger-alt btn fa fa-check" value="&nbsp;&nbsp;CLEAR">
                                                                 </div>
+                                                            </form> -->
+
+                                                            <!-- <form action="<?php echo base_url('Reports/Attendance/Report_Attendance_ATT_Sum/Attendance_Report_By_Cat') ?>" method="POST" target="_blank">
+    <label><input type="checkbox" name="columns[]" value="EmpNo" checked> EMP NO</label>
+    <label><input type="checkbox" name="columns[]" value="Emp_Full_Name" checked> NAME</label>
+    <label><input type="checkbox" name="columns[]" value="FDate"> FROM DATE</label>
+    <label><input type="checkbox" name="columns[]" value="FTime"> FROM TIME</label>
+    <label><input type="checkbox" name="columns[]" value="TDate"> TO DATE</label>
+    <label><input type="checkbox" name="columns[]" value="TTime"> TO TIME</label>
+    <label><input type="checkbox" name="columns[]" value="InTime"> IN TIME</label>
+    <label><input type="checkbox" name="columns[]" value="OutTime"> OUT TIME</label>
+    <label><input type="checkbox" name="columns[]" value="BreackInTime1"> BREAK IN</label>
+    <label><input type="checkbox" name="columns[]" value="BreackOutTime1"> BREAK OUT</label>
+    <label><input type="checkbox" name="columns[]" value="DayStatus"> STATUS</label>
+    <label><input type="checkbox" name="columns[]" value="AfterExH"> OT</label>
+    <label><input type="checkbox" name="columns[]" value="LateM"> LATE</label>
+    <label><input type="checkbox" name="columns[]" value="EarlyDepMin"> ED</label>
+    <label><input type="checkbox" name="columns[]" value="NumShift"> SHIFTS</label>
+
+    <input type="date" name="f_date" required>
+    <input type="date" name="t_date" required>
+
+    <button type="submit">Generate PDF</button>
+</form> -->
+
+                                                            <form
+                                                                action="<?php echo base_url('Reports/Attendance/Report_Attendance_ATT_Sum/Attendance_Report_By_Cat') ?>"
+                                                                method="POST" target="_blank">
+                                                                <div class="form-group col-sm-12">
+                                                                    <div class="col-sm-6">
+                                                                        <img class="imagecss1"
+                                                                            src="<?php echo base_url(); ?>assets/images/attendance_inout.png">
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="form-group col-md-12">
+                                                                    <div class="form-group col-sm-3">
+                                                                        <label for="txt_emp"
+                                                                            class="col-sm-4 control-label">Emp
+                                                                            No</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="text" class="form-control"
+                                                                                name="txt_emp" id="txt_emp"
+                                                                                placeholder="Ex: 0001">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group col-sm-3">
+                                                                        <label for="txt_emp_name"
+                                                                            class="col-sm-4 control-label">Emp
+                                                                            Name</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="text" class="form-control"
+                                                                                name="txt_emp_name" id="txt_emp_name"
+                                                                                placeholder="Ex: Ashan">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group col-sm-3">
+                                                                        <label for="cmb_desig"
+                                                                            class="col-sm-4 control-label">Designation</label>
+                                                                        <div class="col-sm-8">
+                                                                            <select class="form-control" id="cmb_desig"
+                                                                                name="cmb_desig">
+                                                                                <option value="">-- Select --</option>
+                                                                                <?php foreach ($data_desig as $t_data) { ?>
+                                                                                    <option
+                                                                                        value="<?php echo $t_data->Des_ID; ?>">
+                                                                                        <?php echo $t_data->Desig_Name; ?>
+                                                                                    </option>
+                                                                                <?php } ?>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group col-sm-3">
+                                                                        <label for="cmb_dep"
+                                                                            class="col-sm-4 control-label">Department</label>
+                                                                        <div class="col-sm-8">
+                                                                            <select class="form-control" id="cmb_dep"
+                                                                                name="cmb_dep">
+                                                                                <option value="">-- Select --</option>
+                                                                                <?php foreach ($data_dep as $t_data) { ?>
+                                                                                    <option
+                                                                                        value="<?php echo $t_data->Dep_ID; ?>">
+                                                                                        <?php echo $t_data->Dep_Name; ?>
+                                                                                    </option>
+                                                                                <?php } ?>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group col-sm-3">
+                                                                        <label for="cmb_branch"
+                                                                            class="col-sm-4 control-label">Region</label>
+                                                                        <div class="col-sm-8">
+                                                                            <select class="form-control" id="cmb_branch"
+                                                                                name="cmb_branch">
+                                                                                <option value="">-- Select --</option>
+                                                                                <?php foreach ($data_branch as $t_data) { ?>
+                                                                                    <option
+                                                                                        value="<?php echo $t_data->B_id; ?>">
+                                                                                        <?php echo $t_data->B_name; ?>
+                                                                                    </option>
+                                                                                <?php } ?>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group col-sm-3">
+                                                                        <label for="cmb_comp"
+                                                                            class="col-sm-4 control-label">Company</label>
+                                                                        <div class="col-sm-8">
+                                                                            <select class="form-control" id="cmb_comp"
+                                                                                name="cmb_comp">
+                                                                                <option value="">-- Select --</option>
+                                                                                <?php foreach ($data_cmp as $t_data) { ?>
+                                                                                    <option
+                                                                                        value="<?php echo $t_data->Cmp_ID; ?>">
+                                                                                        <?php echo $t_data->Company_Name; ?>
+                                                                                    </option>
+                                                                                <?php } ?>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group col-sm-3">
+                                                                        <label for="cmb_grop"
+                                                                            class="col-sm-4 control-label">Super
+                                                                            EmpGroup</label>
+                                                                        <div class="col-sm-8">
+                                                                            <select class="form-control" id="cmb_grop"
+                                                                                name="cmb_grop">
+                                                                                <option value="">-- Select --</option>
+                                                                                <?php foreach ($data_group as $t_data) { ?>
+                                                                                    <option
+                                                                                        value="<?php echo $t_data->id; ?>">
+                                                                                        <?php echo $t_data->super_gname; ?>
+                                                                                    </option>
+                                                                                <?php } ?>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group col-md-6">
+                                                                    <div class="form-group col-sm-6">
+                                                                        <label for="dpd1"
+                                                                            class="col-sm-4 control-label">From
+                                                                            Date</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="text" class="form-control"
+                                                                                required id="dpd1" name="txt_from_date"
+                                                                                placeholder="Select Date">
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="form-group col-sm-6">
+                                                                        <label for="dpd2"
+                                                                            class="col-sm-4 control-label">To
+                                                                            Date</label>
+                                                                        <div class="col-sm-8">
+                                                                            <input type="text" class="form-control"
+                                                                                required id="dpd2" name="txt_to_date"
+                                                                                placeholder="Select Date">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group col-md-12">
+
+                                                                    <div class="form-group col-md-6">
+                                                                        <label><input type="checkbox"
+                                                                                id="selectAllColumns">
+                                                                            Select All Columns</label>
+                                                                    </div>
+
+
+                                                                    <div class="form-group col-md-12">
+                                                                        <label><input type="checkbox" name="columns[]"
+                                                                                value="EmpNo" checked> EMP NO</label>
+                                                                        <label><input type="checkbox" name="columns[]"
+                                                                                value="Emp_Full_Name" checked>
+                                                                            NAME</label>
+                                                                        <label><input type="checkbox" name="columns[]"
+                                                                                value="FDate"> FROM DATE</label>
+                                                                        <label><input type="checkbox" name="columns[]"
+                                                                                value="FTime"> FROM TIME</label>
+                                                                        <label><input type="checkbox" name="columns[]"
+                                                                                value="TDate"> TO DATE</label>
+                                                                        <label><input type="checkbox" name="columns[]"
+                                                                                value="TTime"> TO TIME</label>
+                                                                        <label><input type="checkbox" name="columns[]"
+                                                                                value="InDate"> IN DATE</label>
+                                                                        <label><input type="checkbox" name="columns[]"
+                                                                                value="InTime"> IN TIME</label>
+                                                                        <label><input type="checkbox" name="columns[]"
+                                                                                value="OutDate"> OUT DATE</label>
+                                                                        <label><input type="checkbox" name="columns[]"
+                                                                                value="OutTime"> OUT TIME</label>
+                                                                        <label><input type="checkbox" name="columns[]"
+                                                                                value="BreackInTime1"> BREAK IN</label>
+                                                                        <label><input type="checkbox" name="columns[]"
+                                                                                value="BreackOutTime1"> BREAK
+                                                                            OUT</label>
+                                                                        <label><input type="checkbox" name="columns[]"
+                                                                                value="DayStatus"> STATUS</label>
+                                                                        <label><input type="checkbox" name="columns[]"
+                                                                                value="AfterExH"> OT</label>
+                                                                        <label><input type="checkbox" name="columns[]"
+                                                                                value="LateM"> LATE</label>
+                                                                        <label><input type="checkbox" name="columns[]"
+                                                                                value="EarlyDepMin"> ED</label>
+                                                                        <label><input type="checkbox" name="columns[]"
+                                                                                value="NumShift"> SHIFTS</label>
+                                                                    </div>
+
+                                                                    <div class="form-group col-md-12">
+                                                                        <!-- <button type="submit"
+                                                                        class="btn btn-primary">Generate PDF</button> -->
+                                                                        <input type="submit" id="search" name="search"
+                                                                            formtarget="_new"
+                                                                            class="btn-green btn fa fa-check"
+                                                                            value="&nbsp;&nbsp;VIEW&nbsp;PDF REPORT">
+
+                                                                        <input type="button" id="cancel" name="cancel"
+                                                                            class="btn-danger-alt btn fa fa-check"
+                                                                            value="&nbsp;&nbsp;CLEAR">
+                                                                    </div>
+
+                                                                </div>
                                                             </form>
+
 
 
                                                             <center>
@@ -267,7 +495,7 @@
 
     <!--Clear Text Boxes-->
     <script type="text/javascript">
-        $("#cancel").click(function() {
+        $("#cancel").click(function () {
 
             $("#txt_emp").val("");
             $("#txt_emp_name").val("");
@@ -289,7 +517,7 @@
             "todayHighlight": true,
             autoclose: true,
             format: 'yyyy/mm/dd'
-        }).on('changeDate', function(ev) {
+        }).on('changeDate', function (ev) {
             $(this).datepicker('hide');
         });
         $('#dpd2').datepicker({
@@ -297,14 +525,14 @@
             "todayHighlight": true,
             autoclose: true,
             format: 'yyyy/mm/dd'
-        }).on('changeDate', function(ev) {
+        }).on('changeDate', function (ev) {
             $(this).datepicker('hide');
         });
     </script>
 
     <!--JQuary Validation-->
     <script type="text/javascript">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $("#frm_in_out_rpt").validate();
             $("#spnmessage").hide("shake", {
                 times: 4
@@ -315,13 +543,13 @@
 
     <!--Auto complete-->
     <script type="text/javascript">
-        $(function() {
+        $(function () {
             $("#txt_emp_name").autocomplete({
                 source: "<?php echo base_url(); ?>Reports/Attendance/Report_Attendance_In_Out/get_auto_emp_name"
             });
         });
 
-        $(function() {
+        $(function () {
             $("#txt_emp").autocomplete({
                 source: "<?php echo base_url(); ?>Reports/Attendance/Report_Attendance_In_Out/get_auto_emp_no"
             });
@@ -394,7 +622,7 @@
             form.append("dpd2", dp2);
 
             var r = new XMLHttpRequest();
-            r.onreadystatechange = function() {
+            r.onreadystatechange = function () {
                 if (r.readyState == 4) {
                     // Remove loading indicator
                     // var loadingIndicator = document.getElementById("loadingIndicator");
@@ -447,7 +675,7 @@
             form.append("dpd2", dp2);
 
             var r = new XMLHttpRequest();
-            r.onreadystatechange = function() {
+            r.onreadystatechange = function () {
                 if (r.readyState == 4) {
                     // Remove loading indicator
                     // var loadingIndicator = document.getElementById("loadingIndicator");
@@ -491,6 +719,18 @@
             });
         }
     </script> -->
+    <script>
+        document.getElementById('selectAllColumns').addEventListener('change', function () {
+            const allCheckboxes = document.querySelectorAll('input[name="columns[]"]');
+            allCheckboxes.forEach(function (checkbox) {
+                if (checkbox.value !== 'EmpNo' && checkbox.value !== 'Emp_Full_Name') {
+                    checkbox.checked = document.getElementById('selectAllColumns').checked;
+                }
+            });
+        });
+    </script>
+
+
 </body>
 
 
