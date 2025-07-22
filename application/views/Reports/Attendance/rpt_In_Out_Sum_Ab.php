@@ -73,7 +73,7 @@ $pdf->setTextShadow(array('enabled' => true, 'depth_w' => 0.0, 'depth_h' => 0.0,
 
 // Set some content to print
 $html = '
-        <div style="margin-left:200px; text-align:center; font-size:13px;">IN OUT REPORT</div>
+        <div style="margin-left:200px; text-align:center; font-size:13px;">ABSENT REPORT</div>
             <div style="font-size: 11px; float: left; border-bottom: solid #000 1px;">From Date:' . $f_date . ' &nbsp;- To Date : ' . $t_date . '
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date: '.$current_date.'&nbsp;&nbsp; Time:'.$current_time.'</div></font><br>
@@ -83,14 +83,13 @@ $html = '
                         <th style="font-size:11px;border-bottom: 1px solid black; width:60px;">EMP NO</th>
                         <th style="font-size:11px;border-bottom: 1px solid black; width:100px;">NAME</th>
                         <th style="font-size:11px;border-bottom: 1px solid black;width:70px;">REGION</th>
-                        <th style="font-size:11px;border-bottom: 1px solid black;width:60px;">DATE</th>
+                        <th style="font-size:11px;border-bottom: 1px solid black;width:60px;">FROM DATE</th>
                         <th style="font-size:11px;border-bottom: 1px solid black;">FROM TIME</th>
+                        <th style="font-size:11px;border-bottom: 1px solid black;width:60px;">TO DATE</th>
                         <th style="font-size:11px;border-bottom: 1px solid black;">TO TIME</th>
                         <th style="font-size:11px;border-bottom: 1px solid black;">IN TIME</th>
                         <th style="font-size:11px;border-bottom: 1px solid black;">OUT TIME</th>
-                        <th style="font-size:11px;border-bottom: 1px solid black; width:30px;">ST</th>         
-                   
-                             
+                        <th style="font-size:11px;border-bottom: 1px solid black; width:30px;">ST</th>   
                     </tr>
                 </thead>
              <tbody>';
@@ -105,12 +104,11 @@ foreach ($data_set2 as $data) {
                         <td style="font-size:10px;width:70px;">' . $data->B_name . '</td>
                         <td style="font-size:10px; width:60px;">' . $data->FDate . '</td> 
                         <td style="font-size:10px;">' . $data->FTime . '</td>    
+                        <td style="font-size:10px; width:60px;">' . $data->TDate . '</td> 
                         <td style="font-size:10px;">' . $data->TTime . '</td>
                         <td style="font-size:10px;">' . $data->InTime . '</td>
                         <td style="font-size:10px;">' . $data->OutTime . '</td>
                         <td style="font-size:10px;width:30px;">' . $data->DayStatus . '</td>
-                  
-                                      
                     </tr>'
 
     ;

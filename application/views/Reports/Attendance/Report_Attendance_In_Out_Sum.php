@@ -828,7 +828,7 @@
                                                                                         <option value="LvSumRpt">Leave
                                                                                             Summary Report</option>
                                                                                         <option value="BrkRpt">Break
-                                                                                            IN/OOT Report</option>
+                                                                                            IN/OUT Report</option>
                                                                                     </select>
                                                                                 </div>
                                                                                 <div class="form-group">
