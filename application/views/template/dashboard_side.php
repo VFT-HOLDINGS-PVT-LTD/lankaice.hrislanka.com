@@ -389,7 +389,7 @@ $paydata = $this->Db_model->getfilteredData("select * from tbl_empmaster where E
                                 <?php endif; ?> -->
 
                                 <?php if ($currentUser[0]->late_report == 1): ?>
-                                    <li><a href="<?php echo base_url(); ?>Reports/Attendance/Report_Attendance_ATT_Sum">ATTENDANCE SUMMERY</a></li>
+                                    <li><a href="<?php echo base_url(); ?>Reports/Attendance/Report_Attendance_ATT_Sum">ATTENDANCE REPORTS</a></li>
                                 <?php endif; ?>
                                 <!-- <?php if ($currentUser[0]->late_report == 1): ?>
                                     <li><a href="<?php echo base_url(); ?>Reports/Attendance/Report_Attendance_ATT_Sum_Ab">ABSENT SUMMERY</a></li>
