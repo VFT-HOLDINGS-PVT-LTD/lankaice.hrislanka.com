@@ -745,12 +745,12 @@
 
                                                                                 <div class="form-group">
                                                                                     <label for="cmb_branch"
-                                                                                        class="form-label">Region</label>
+                                                                                        class="form-label">Branch</label>
                                                                                     <select class="form-select"
                                                                                         id="cmb_branch"
                                                                                         name="cmb_branch">
                                                                                         <option value="">-- Select
-                                                                                            Region --</option>
+                                                                                            Branch --</option>
                                                                                         <?php foreach ($data_branch as $t_data) { ?>
                                                                                             <option
                                                                                                 value="<?php echo $t_data->B_id; ?>">
