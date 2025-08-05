@@ -91,7 +91,7 @@ class Attendance_Process_New extends CI_Controller
 
         $AfterShift = 0;
 
-        if (! empty($dtEmp['EmpData'])) {
+        if (!empty($dtEmp['EmpData'])) {
 
             for ($x = 0; $x < count($dtEmp['EmpData']); $x++) {
                 $EmpNo = $dtEmp['EmpData'][$x]->EmpNo;
